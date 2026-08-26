@@ -89,8 +89,8 @@ class VoucherRequest extends FormRequest
             'code' => ['required', 'string', 'max:80'],
             'is_enabled' => ['required', 'boolean'],
             'requires_authentication' => ['required', 'boolean'],
-            'max_redemptions' => ['nullable', 'integer', 'min:1', 'max:4294967295'],
-            'max_redemptions_per_user' => ['nullable', 'integer', 'min:1', 'max:4294967295'],
+            'max_redemptions' => ['nullable', 'regex:/^[0-9]+$/D', 'integer', 'min:1', 'max:4294967295'],
+            'max_redemptions_per_user' => ['nullable', 'regex:/^[0-9]+$/D', 'integer', 'min:1', 'max:4294967295'],
             'revision' => [$this->route('voucher') instanceof Voucher ? 'required' : 'nullable', 'integer', 'min:1'],
             'starts_at' => ['nullable', 'date'],
             'expires_at' => ['nullable', 'date'],
@@ -100,7 +100,7 @@ class VoucherRequest extends FormRequest
             'rewards.*.amount' => [
                 'nullable',
                 'required_if:rewards.*.type,'.Reward::TYPE_MONEY,
-                'numeric', 'decimal:0,2', 'gt:0', 'max:999999999',
+                'regex:/^[0-9]+$/D', 'integer', 'min:1', 'max:999999999',
             ],
             'rewards.*.package_id' => [
                 'nullable',

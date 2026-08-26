@@ -89,7 +89,7 @@
 
             <div class="col-md-6" data-reward-fields="money" @if($rewardType !== 'money') hidden @endif>
                 <label class="form-label" for="rewardAmount{{ $index }}">{{ trans('vouchers::admin.rewards.amount') }}</label>
-                <input type="number" min="0.01" max="999999999" step="0.01" class="form-control @error('rewards.'.$index.'.amount') is-invalid @enderror" id="rewardAmount{{ $index }}" name="rewards[{{ $index }}][amount]" value="{{ $rewardAmount }}" data-active-required @disabled($rewardType !== 'money') @required($rewardType === 'money')>
+                <input type="text" inputmode="numeric" pattern="[0-9]+" maxlength="9" class="form-control @error('rewards.'.$index.'.amount') is-invalid @enderror" id="rewardAmount{{ $index }}" name="rewards[{{ $index }}][amount]" value="{{ $rewardAmount }}" data-integer-input data-active-required @disabled($rewardType !== 'money') @required($rewardType === 'money')>
                 @error('rewards.'.$index.'.amount')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                 @enderror

@@ -55,6 +55,20 @@ class AdminVoucherViewTest extends TestCase
         }
     }
 
+    public function test_integer_fields_use_digit_only_controls(): void
+    {
+        $settings = file_get_contents(dirname(__DIR__, 2).'/resources/views/admin/settings.blade.php');
+        $form = file_get_contents(dirname(__DIR__, 2).'/resources/views/admin/codes/_form.blade.php');
+        $reward = file_get_contents(dirname(__DIR__, 2).'/resources/views/admin/codes/_reward.blade.php');
+
+        $this->assertStringContainsString('id="rateLimitInput"', $settings);
+        $this->assertStringContainsString('id="globalLimitInput"', $form);
+        $this->assertStringContainsString('id="userLimitInput"', $form);
+        $this->assertSame(1, substr_count($settings, 'data-integer-input'));
+        $this->assertSame(2, substr_count($form, 'data-integer-input'));
+        $this->assertStringContainsString('data-integer-input data-active-required', $reward);
+    }
+
     public function test_an_unavailable_internal_role_snapshot_is_rendered_safely(): void
     {
         $this->app->make('view')->addNamespace('vouchers', dirname(__DIR__, 2).'/resources/views');

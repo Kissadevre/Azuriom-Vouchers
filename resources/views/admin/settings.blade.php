@@ -3,6 +3,7 @@
 @section('title', trans('vouchers::admin.settings.title'))
 
 @include('vouchers::admin._styles')
+@include('vouchers::admin._integer-input')
 
 @section('content')
     <div class="card vouchers-admin-card mb-4">
@@ -36,7 +37,7 @@
                         </div>
                         <div class="col-lg-7">
                             <div class="input-group @error('rate_limit') has-validation @enderror">
-                                <input type="number" min="1" max="1000" class="form-control @error('rate_limit') is-invalid @enderror" id="rateLimitInput" name="rate_limit" value="{{ old('rate_limit', $rateLimit) }}" required>
+                                <input type="text" inputmode="numeric" pattern="[0-9]+" maxlength="4" class="form-control @error('rate_limit') is-invalid @enderror" id="rateLimitInput" name="rate_limit" value="{{ old('rate_limit', $rateLimit) }}" data-integer-input required>
                                 <span class="input-group-text">{{ trans('vouchers::admin.settings.attempts_per_minute') }}</span>
                                 @error('rate_limit')
                                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>

@@ -15,6 +15,35 @@ use Illuminate\Validation\ValidationException;
 
 class AdminVoucherRequestTest extends TestCase
 {
+    public function test_integer_fields_reject_decimals_letters_and_numeric_notation(): void
+    {
+        $this->assertSame([], $this->validateReward([
+            'type' => Reward::TYPE_MONEY,
+            'amount' => '25',
+        ]));
+
+        foreach (['25.5', '1e3', '+10', 'ten'] as $amount) {
+            $errors = $this->validateReward([
+                'type' => Reward::TYPE_MONEY,
+                'amount' => $amount,
+            ]);
+
+            $this->assertArrayHasKey('rewards.0.amount', $errors);
+        }
+
+        foreach (['2.5', '1e3', '-1', 'ten'] as $limit) {
+            $errors = $this->validateRewards([
+                ['type' => Reward::TYPE_MONEY, 'amount' => '25'],
+            ], voucher: [
+                'max_redemptions' => $limit,
+                'max_redemptions_per_user' => $limit,
+            ]);
+
+            $this->assertArrayHasKey('max_redemptions', $errors);
+            $this->assertArrayHasKey('max_redemptions_per_user', $errors);
+        }
+    }
+
     public function test_server_command_admin_validation_enforces_the_bridge_contract(): void
     {
         $this->enableServerIntegration();
@@ -130,15 +159,15 @@ class AdminVoucherRequestTest extends TestCase
      * @param  array<int, array<string, mixed>>  $rewards
      * @return array<string, array<int, string>>
      */
-    private function validateRewards(array $rewards, ?User $actor = null): array
+    private function validateRewards(array $rewards, ?User $actor = null, array $voucher = []): array
     {
-        $request = VoucherRequest::create('/admin/vouchers/codes', 'POST', [
+        $request = VoucherRequest::create('/admin/vouchers/codes', 'POST', array_merge([
             'name' => 'Validation voucher',
             'code' => 'VALIDATION2026',
             'is_enabled' => '1',
             'requires_authentication' => '1',
             'rewards' => $rewards,
-        ]);
+        ], $voucher));
         $request->setContainer($this->app);
         $request->setRedirector($this->app->make(\Illuminate\Routing\Redirector::class));
         $route = new Route('POST', '/admin/vouchers/codes', fn () => null);

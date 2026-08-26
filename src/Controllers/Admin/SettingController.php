@@ -30,7 +30,7 @@ class SettingController extends Controller
     {
         $validated = $request->validate([
             'enabled' => ['required', 'boolean'],
-            'rate_limit' => ['required', 'integer', 'min:1', 'max:1000'],
+            'rate_limit' => ['required', 'regex:/^[0-9]+$/D', 'integer', 'min:1', 'max:1000'],
         ]);
 
         Setting::updateSettings([

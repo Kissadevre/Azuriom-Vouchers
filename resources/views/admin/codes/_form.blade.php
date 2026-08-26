@@ -1,4 +1,5 @@
 @include('admin.elements.date-picker', ['wrap' => true])
+@include('vouchers::admin._integer-input')
 
 @csrf
 
@@ -66,7 +67,7 @@
 <div class="row gx-3">
     <div class="mb-3 col-md-6">
         <label class="form-label" for="globalLimitInput">{{ trans('vouchers::admin.fields.max_redemptions') }}</label>
-        <input type="number" min="1" max="4294967295" class="form-control @error('max_redemptions') is-invalid @enderror" id="globalLimitInput" name="max_redemptions" value="{{ $safeOld('max_redemptions', $voucher->max_redemptions) }}">
+        <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="10" class="form-control @error('max_redemptions') is-invalid @enderror" id="globalLimitInput" name="max_redemptions" value="{{ $safeOld('max_redemptions', $voucher->max_redemptions) }}" data-integer-input>
         @error('max_redemptions')
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
@@ -75,7 +76,7 @@
 
     <div class="mb-3 col-md-6">
         <label class="form-label" for="userLimitInput">{{ trans('vouchers::admin.fields.max_redemptions_per_user') }}</label>
-        <input type="number" min="1" max="4294967295" class="form-control @error('max_redemptions_per_user') is-invalid @enderror" id="userLimitInput" name="max_redemptions_per_user" value="{{ $safeOld('max_redemptions_per_user', $voucher->max_redemptions_per_user) }}">
+        <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="10" class="form-control @error('max_redemptions_per_user') is-invalid @enderror" id="userLimitInput" name="max_redemptions_per_user" value="{{ $safeOld('max_redemptions_per_user', $voucher->max_redemptions_per_user) }}" data-integer-input>
         @error('max_redemptions_per_user')
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
         @enderror
