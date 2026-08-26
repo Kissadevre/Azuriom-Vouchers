@@ -15,7 +15,7 @@
                             <i class="bi bi-pause-circle"></i> {{ trans('vouchers::messages.errors.disabled') }}
                         </div>
                     @else
-                    <form action="{{ route('vouchers.redeem') }}" method="POST">
+                    <form action="{{ route('vouchers.redeem') }}" method="POST" id="captcha-form">
                         @csrf
                         <input type="hidden" name="request_token" value="{{ old('request_token', $requestToken) }}">
 
@@ -41,6 +41,8 @@
                                 {{ trans('vouchers::messages.logged_as', ['user' => auth()->user()->name]) }}
                             </div>
                         @endguest
+
+                        @include('elements.captcha', ['center' => true])
 
                         <button type="submit" class="btn btn-primary w-100">
                             <i class="bi bi-ticket-perforated"></i> {{ trans('vouchers::messages.actions.redeem') }}

@@ -16,6 +16,7 @@ Vouchers is an Azuriom plugin for creating redeemable codes and granting one or 
 - Every voucher can contain multiple ordered rewards.
 - Every redemption creates an immutable execution ledger for its rewards.
 - Administrators can pause every redemption globally and configure a per-IP attempts-per-minute limit.
+- Voucher redemptions automatically use Azuriom's configured reCAPTCHA, hCaptcha or Turnstile protection.
 - The administration panel exposes the complete redemption ledger with recipients, actors, IP addresses and delivery states.
 - Shop is an optional dependency; package rewards are available when Shop is enabled.
 - External package and server-command delivery is claimed once; uncertain attempts require review and are never retried automatically.
@@ -39,6 +40,7 @@ Currently implemented:
 - Administration CRUD with generated or custom codes.
 - Administration submenus for settings, voucher codes and redemption logs.
 - Configurable global redemption switch and per-IP rate limiting.
+- Native Azuriom CAPTCHA verification whenever a CAPTCHA provider is configured.
 - Date windows, global limits, per-user limits and authentication mode.
 - Multiple ordered Shop point rewards.
 - Optional Shop package/product rewards with a zero-cost payment audit trail.
