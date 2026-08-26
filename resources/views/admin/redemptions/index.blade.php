@@ -2,18 +2,29 @@
 
 @section('title', trans('vouchers::admin.redemptions.title'))
 
-@section('content')
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <p class="text-muted">{{ trans('vouchers::admin.redemptions.description') }}</p>
+@include('vouchers::admin._styles')
 
+@section('content')
+    <div class="card vouchers-admin-card mb-4">
+        <div class="vouchers-admin-header">
+            <div class="vouchers-admin-heading">
+                <span class="vouchers-admin-icon"><i class="bi bi-clock-history" aria-hidden="true"></i></span>
+                <div>
+                    <h2 class="h5 mb-1">{{ trans('vouchers::admin.redemptions.activity_title') }}</h2>
+                    <p class="text-body-secondary mb-0">{{ trans('vouchers::admin.redemptions.description') }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
             @if($redemptions->isEmpty())
-                <div class="alert alert-info mb-0" role="alert">
-                    <i class="bi bi-info-circle"></i> {{ trans('vouchers::admin.redemptions.empty') }}
+                <div class="vouchers-empty-state" role="status">
+                    <i class="bi bi-clock-history" aria-hidden="true"></i>
+                    <p class="text-body-secondary mb-0">{{ trans('vouchers::admin.redemptions.empty') }}</p>
                 </div>
             @else
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
+                    <table class="table table-hover align-middle vouchers-admin-table mb-0">
                         <thead>
                             <tr>
                                 <th scope="col">{{ trans('vouchers::admin.redemptions.reference') }}</th>
@@ -29,9 +40,9 @@
                         <tbody>
                             @foreach($redemptions as $redemption)
                                 <tr>
-                                    <td><code>{{ strtoupper(substr($redemption->uuid, 0, 8)) }}</code></td>
-                                    <td>{{ $redemption->voucher->name }}</td>
-                                    <td>{{ $redemption->user?->name ?? $redemption->username }}</td>
+                                    <td><code class="vouchers-code">{{ strtoupper(substr($redemption->uuid, 0, 8)) }}</code></td>
+                                    <td class="fw-semibold">{{ $redemption->voucher->name }}</td>
+                                    <td><i class="bi bi-person me-1 text-body-secondary" aria-hidden="true"></i>{{ $redemption->user?->name ?? $redemption->username }}</td>
                                     <td>
                                         @if($redemption->redeemer !== null)
                                             {{ $redemption->redeemer->name }}
@@ -39,21 +50,21 @@
                                             <span class="text-muted">{{ trans('vouchers::admin.redemptions.guest') }}</span>
                                         @endif
                                     </td>
-                                    <td><code>{{ $redemption->ip_address ?? '—' }}</code></td>
+                                    <td><code class="text-body-secondary">{{ $redemption->ip_address ?? '—' }}</code></td>
                                     <td>
                                         <span class="badge bg-{{ trans('vouchers::admin.redemption_status.'.$redemption->status.'.color') }}">
                                             {{ trans('vouchers::admin.redemption_status.'.$redemption->status.'.label') }}
                                         </span>
                                     </td>
                                     <td>{{ $redemption->executions_count }}</td>
-                                    <td>{{ format_date($redemption->created_at, true) }}</td>
+                                    <td class="text-nowrap">{{ format_date($redemption->created_at, true) }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
 
-                <div class="mt-3">
+                <div class="p-3 border-top">
                     {{ $redemptions->links() }}
                 </div>
             @endif

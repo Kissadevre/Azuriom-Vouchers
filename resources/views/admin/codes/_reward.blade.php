@@ -29,10 +29,13 @@
     ], true);
 @endphp
 
-<div class="card mb-3" data-reward>
+<div class="card vouchers-reward-card mb-3" data-reward>
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <strong>{{ trans('vouchers::admin.rewards.reward') }}</strong>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge rounded-pill text-bg-primary"><i class="bi bi-gift" aria-hidden="true"></i></span>
+                <strong>{{ trans('vouchers::admin.rewards.reward') }}</strong>
+            </div>
             <button type="button" class="btn btn-sm btn-outline-danger" data-remove-reward title="{{ trans('messages.actions.delete') }}" aria-label="{{ trans('messages.actions.delete') }}">
                 <i class="bi bi-trash"></i>
             </button>

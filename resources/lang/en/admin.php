@@ -12,6 +12,8 @@ return [
 
     'settings' => [
         'title' => 'Voucher settings',
+        'security_title' => 'Availability and protection',
+        'security_description' => 'Control global access and limit suspicious redemption attempts.',
         'enabled' => 'Enable voucher redemptions',
         'enabled_help' => 'When disabled, every voucher redemption is paused without changing or disabling individual codes.',
         'rate_limit' => 'Redemption rate limit',
@@ -22,6 +24,7 @@ return [
 
     'redemptions' => [
         'title' => 'Voucher redemption logs',
+        'activity_title' => 'Recent activity',
         'description' => 'Review every voucher redemption, its recipient, authenticated actor and delivery state.',
         'empty' => 'No voucher has been redeemed yet.',
         'reference' => 'Reference',
@@ -35,7 +38,9 @@ return [
 
     'codes' => [
         'title' => 'Voucher codes',
+        'manage_title' => 'Manage codes',
         'description' => 'Create codes, control who can redeem them and attach one or more rewards.',
+        'form_description' => 'Define availability, usage limits and the rewards each account will receive.',
         'create' => 'Create voucher',
         'edit' => 'Edit :voucher',
         'empty' => 'No voucher codes have been created yet.',
@@ -44,6 +49,12 @@ return [
         'disabled' => 'The voucher code has been disabled.',
         'deleted' => 'The voucher code has been deleted.',
         'delete_has_redemptions' => 'A voucher with redemption history cannot be deleted. Disable it instead.',
+    ],
+
+    'sections' => [
+        'identity' => 'Code identity',
+        'limits' => 'Limits and validity period',
+        'access' => 'Access and availability',
     ],
 
     'fields' => [

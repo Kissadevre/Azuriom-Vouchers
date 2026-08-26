@@ -12,6 +12,8 @@ return [
 
     'settings' => [
         'title' => 'Ajustes de Vouchers',
+        'security_title' => 'Disponibilidad y protección',
+        'security_description' => 'Controla el acceso global y limita los intentos de canje sospechosos.',
         'enabled' => 'Habilitar el canje de vouchers',
         'enabled_help' => 'Al desactivarlo, se detendrán todos los canjes sin modificar ni deshabilitar los códigos individuales.',
         'rate_limit' => 'Límite de intentos de canje',
@@ -22,6 +24,7 @@ return [
 
     'redemptions' => [
         'title' => 'Registros de canje',
+        'activity_title' => 'Actividad reciente',
         'description' => 'Consulta cada canje, su destinatario, el usuario que lo solicitó y el estado de entrega.',
         'empty' => 'Todavía no se ha canjeado ningún voucher.',
         'reference' => 'Referencia',
@@ -35,7 +38,9 @@ return [
 
     'codes' => [
         'title' => 'Códigos de canje',
+        'manage_title' => 'Administrar códigos',
         'description' => 'Crea códigos, controla quién puede canjearlos y asigna una o varias recompensas.',
+        'form_description' => 'Define la disponibilidad, los límites de uso y las recompensas que recibirá cada cuenta.',
         'create' => 'Crear código',
         'edit' => 'Editar :voucher',
         'empty' => 'Todavía no se ha creado ningún código de canje.',
@@ -44,6 +49,12 @@ return [
         'disabled' => 'El código de canje fue desactivado.',
         'deleted' => 'El código de canje fue eliminado.',
         'delete_has_redemptions' => 'No se puede eliminar un código con historial de canjes. Desactívalo en su lugar.',
+    ],
+
+    'sections' => [
+        'identity' => 'Identidad del código',
+        'limits' => 'Límites y periodo de validez',
+        'access' => 'Acceso y disponibilidad',
     ],
 
     'fields' => [

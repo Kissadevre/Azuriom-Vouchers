@@ -28,6 +28,11 @@
     };
 @endphp
 
+<section class="vouchers-admin-section mb-4">
+<div class="d-flex align-items-center gap-2 mb-3">
+    <i class="bi bi-tag text-primary" aria-hidden="true"></i>
+    <h2 class="h6 mb-0">{{ trans('vouchers::admin.sections.identity') }}</h2>
+</div>
 <div class="row gx-3">
     <div class="mb-3 col-md-6">
         <label class="form-label" for="nameInput">{{ trans('vouchers::admin.fields.name') }}</label>
@@ -51,7 +56,13 @@
         <div class="form-text">{{ trans('vouchers::admin.help.code') }}</div>
     </div>
 </div>
+</section>
 
+<section class="vouchers-admin-section mb-4">
+<div class="d-flex align-items-center gap-2 mb-3">
+    <i class="bi bi-calendar-range text-primary" aria-hidden="true"></i>
+    <h2 class="h6 mb-0">{{ trans('vouchers::admin.sections.limits') }}</h2>
+</div>
 <div class="row gx-3">
     <div class="mb-3 col-md-6">
         <label class="form-label" for="globalLimitInput">{{ trans('vouchers::admin.fields.max_redemptions') }}</label>
@@ -95,22 +106,37 @@
         </div>
     </div>
 </div>
+</section>
 
-<div class="mb-3 form-check form-switch">
-    <input type="checkbox" class="form-check-input" id="authenticationSwitch" name="requires_authentication" @checked(old('requires_authentication', $voucher->requires_authentication))>
-    <label class="form-check-label" for="authenticationSwitch">{{ trans('vouchers::admin.fields.requires_authentication') }}</label>
-    <div class="form-text">{{ trans('vouchers::admin.help.requires_authentication') }}</div>
-</div>
+<section class="vouchers-admin-section mb-4">
+    <div class="d-flex align-items-center gap-2 mb-3">
+        <i class="bi bi-shield-lock text-primary" aria-hidden="true"></i>
+        <h2 class="h6 mb-0">{{ trans('vouchers::admin.sections.access') }}</h2>
+    </div>
+    <div class="row g-3">
+        <div class="col-lg-8">
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" id="authenticationSwitch" name="requires_authentication" @checked(old('requires_authentication', $voucher->requires_authentication))>
+                <label class="form-check-label fw-semibold" for="authenticationSwitch">{{ trans('vouchers::admin.fields.requires_authentication') }}</label>
+                <div class="form-text">{{ trans('vouchers::admin.help.requires_authentication') }}</div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" id="enabledSwitch" name="is_enabled" @checked(old('is_enabled', $voucher->is_enabled))>
+                <label class="form-check-label fw-semibold" for="enabledSwitch">{{ trans('vouchers::admin.fields.is_enabled') }}</label>
+            </div>
+        </div>
+    </div>
+</section>
 
-<div class="mb-4 form-check form-switch">
-    <input type="checkbox" class="form-check-input" id="enabledSwitch" name="is_enabled" @checked(old('is_enabled', $voucher->is_enabled))>
-    <label class="form-check-label" for="enabledSwitch">{{ trans('vouchers::admin.fields.is_enabled') }}</label>
-</div>
-
-<div class="d-flex justify-content-between align-items-center mb-2">
-    <div>
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3">
+    <div class="d-flex align-items-center gap-2">
+        <span class="vouchers-admin-icon"><i class="bi bi-gift" aria-hidden="true"></i></span>
+        <div>
         <h2 class="h5 mb-1">{{ trans('vouchers::admin.rewards.title') }}</h2>
         <p class="text-muted mb-0">{{ trans('vouchers::admin.rewards.description') }}</p>
+        </div>
     </div>
     <button type="button" class="btn btn-outline-primary" id="addRewardButton">
         <i class="bi bi-plus-lg"></i> {{ trans('vouchers::admin.rewards.add') }}
