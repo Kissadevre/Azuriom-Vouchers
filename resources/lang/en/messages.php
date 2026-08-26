@@ -14,7 +14,12 @@ return [
         'username' => 'Username',
     ],
 
+    'placeholders' => [
+        'code' => 'XXXX-XXXX-XXXX',
+    ],
+
     'help' => [
+        'code' => 'You can enter the code using uppercase or lowercase letters.',
         'guest' => 'Enter the identifier of an existing account. Codes that require authentication will ask you to sign in.',
     ],
 

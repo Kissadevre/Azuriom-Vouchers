@@ -14,7 +14,12 @@ return [
         'username' => 'Nombre de usuario',
     ],
 
+    'placeholders' => [
+        'code' => 'XXXX-XXXX-XXXX',
+    ],
+
     'help' => [
+        'code' => 'Puedes escribir el código con mayúsculas o minúsculas.',
         'guest' => 'Ingresa el identificador de una cuenta existente. Los códigos que requieran autenticación te pedirán iniciar sesión.',
     ],
 

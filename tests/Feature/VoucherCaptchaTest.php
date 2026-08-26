@@ -28,5 +28,7 @@ class VoucherCaptchaTest extends TestCase
 
         $this->assertStringContainsString('id="captcha-form"', $view);
         $this->assertStringContainsString("@include('elements.captcha', ['center' => true])", $view);
+        $this->assertStringContainsString('autocomplete="one-time-code"', $view);
+        $this->assertStringContainsString('aria-describedby="codeHelp"', $view);
     }
 }
