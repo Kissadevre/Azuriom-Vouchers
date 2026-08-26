@@ -1,9 +1,14 @@
 <?php
 
 use Azuriom\Plugin\Vouchers\Controllers\Admin\VoucherController;
+use Azuriom\Plugin\Vouchers\Controllers\Admin\RedemptionController;
+use Azuriom\Plugin\Vouchers\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('can:vouchers.admin')->group(function () {
+    Route::get('/settings', [SettingController::class, 'show'])->name('settings');
+    Route::post('/settings', [SettingController::class, 'save'])->name('settings.save');
+    Route::get('/redemptions', [RedemptionController::class, 'index'])->name('redemptions.index');
     Route::get('/', [VoucherController::class, 'index'])->name('codes.index');
     Route::get('/index', [VoucherController::class, 'index'])->name('index');
     Route::get('/create', [VoucherController::class, 'create'])->name('codes.create');

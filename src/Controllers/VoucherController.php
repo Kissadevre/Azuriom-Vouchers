@@ -7,6 +7,7 @@ use Azuriom\Plugin\Vouchers\Exceptions\VoucherRedemptionException;
 use Azuriom\Plugin\Vouchers\Models\Redemption;
 use Azuriom\Plugin\Vouchers\Requests\RedeemVoucherRequest;
 use Azuriom\Plugin\Vouchers\Services\RedeemVoucher;
+use Azuriom\Plugin\Vouchers\Services\VoucherSettings;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
@@ -16,11 +17,12 @@ class VoucherController extends Controller
     /**
      * Show the public voucher redemption page.
      */
-    public function index(): View
+    public function index(VoucherSettings $settings): View
     {
         return view('vouchers::index', [
             'requestToken' => (string) Str::uuid(),
             'userAttributeName' => game()->userPrimaryAttributeName(),
+            'vouchersEnabled' => $settings->enabled(),
         ]);
     }
 
@@ -40,6 +42,7 @@ class VoucherController extends Controller
             );
         } catch (VoucherRedemptionException $exception) {
             $reason = match (true) {
+                $exception->reason === VoucherRedemptionException::DISABLED => $exception->reason,
                 $exception->reason === VoucherRedemptionException::AUTHENTICATION_REQUIRED,
                 $exception->reason === VoucherRedemptionException::RECIPIENT_REQUIRED => $exception->reason,
                 $exception->reason === VoucherRedemptionException::USER_LIMIT_REACHED

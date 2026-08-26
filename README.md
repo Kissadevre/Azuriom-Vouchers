@@ -15,6 +15,8 @@ Vouchers is an Azuriom plugin for creating redeemable codes and granting one or 
 - Date windows, global limits and per-user limits are stored on each voucher.
 - Every voucher can contain multiple ordered rewards.
 - Every redemption creates an immutable execution ledger for its rewards.
+- Administrators can pause every redemption globally and configure a per-IP attempts-per-minute limit.
+- The administration panel exposes the complete redemption ledger with recipients, actors, IP addresses and delivery states.
 - Shop is an optional dependency; package rewards are available when Shop is enabled.
 - External package and server-command delivery is claimed once; uncertain attempts require review and are never retried automatically.
 - Server commands use one execution-ledger entry per command and support the safe `{player}` and `{name}` recipient placeholders.
@@ -35,6 +37,8 @@ Currently implemented:
 
 - Secure voucher persistence and reward execution ledger.
 - Administration CRUD with generated or custom codes.
+- Administration submenus for settings, voucher codes and redemption logs.
+- Configurable global redemption switch and per-IP rate limiting.
 - Date windows, global limits, per-user limits and authentication mode.
 - Multiple ordered Shop point rewards.
 - Optional Shop package/product rewards with a zero-cost payment audit trail.

@@ -17,8 +17,10 @@ use UnexpectedValueException;
 
 class RedeemVoucher
 {
-    public function __construct(private readonly RewardDeliveryService $delivery)
-    {
+    public function __construct(
+        private readonly RewardDeliveryService $delivery,
+        private readonly VoucherSettings $settings,
+    ) {
     }
 
     /**
@@ -31,6 +33,10 @@ class RedeemVoucher
         string $requestToken,
         ?string $ipAddress,
     ): Redemption {
+        if (! $this->settings->enabled()) {
+            throw new VoucherRedemptionException(VoucherRedemptionException::DISABLED);
+        }
+
         $requestFingerprints = $this->requestFingerprints(
             $code,
             $authenticatedUser,

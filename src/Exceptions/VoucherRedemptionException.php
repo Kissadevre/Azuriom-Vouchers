@@ -8,6 +8,8 @@ class VoucherRedemptionException extends RuntimeException
 {
     public const UNAVAILABLE = 'unavailable';
 
+    public const DISABLED = 'disabled';
+
     public const AUTHENTICATION_REQUIRED = 'authentication_required';
 
     public const RECIPIENT_REQUIRED = 'recipient_required';

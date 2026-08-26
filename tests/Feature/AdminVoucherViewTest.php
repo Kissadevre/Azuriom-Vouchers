@@ -5,7 +5,6 @@ namespace Azuriom\Plugin\Vouchers\Tests\Feature;
 use Azuriom\Plugin\Vouchers\Models\Reward;
 use Azuriom\Plugin\Vouchers\Models\Voucher;
 use Azuriom\Plugin\Vouchers\Tests\TestCase;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ViewErrorBag;
 
 class AdminVoucherViewTest extends TestCase
@@ -14,10 +13,7 @@ class AdminVoucherViewTest extends TestCase
     {
         $this->app->make('view')->addNamespace('vouchers', dirname(__DIR__, 2).'/resources/views');
 
-        if (! Route::has('vouchers.admin.codes.generate')) {
-            Route::post('/admin/vouchers/codes/generate', fn () => null)
-                ->name('vouchers.admin.codes.generate');
-        }
+        $this->ensureGenerateRoute();
 
         $voucher = new Voucher([
             'name' => 'Test voucher',
@@ -63,10 +59,7 @@ class AdminVoucherViewTest extends TestCase
     {
         $this->app->make('view')->addNamespace('vouchers', dirname(__DIR__, 2).'/resources/views');
 
-        if (! Route::has('vouchers.admin.codes.generate')) {
-            Route::post('/admin/vouchers/codes/generate', fn () => null)
-                ->name('vouchers.admin.codes.generate');
-        }
+        $this->ensureGenerateRoute();
 
         $html = view('vouchers::admin.codes._form', [
             'voucher' => new Voucher([
@@ -90,5 +83,19 @@ class AdminVoucherViewTest extends TestCase
         $this->assertStringContainsString('value="99" selected', $html);
         $this->assertStringContainsString('&lt;script&gt;alert(&quot;voucher&quot;)&lt;/script&gt;', $html);
         $this->assertStringNotContainsString('<script>alert("voucher")</script>', $html);
+    }
+
+    private function ensureGenerateRoute(): void
+    {
+        $router = $this->app->make('router');
+
+        if ($router->getRoutes()->getByName('vouchers.admin.codes.generate') === null) {
+            $router->post('/admin/vouchers/codes/generate', fn () => null)
+                ->name('vouchers.admin.codes.generate');
+
+            $router->getRoutes()->refreshNameLookups();
+        }
+
+        $this->app->make('url')->setRoutes($router->getRoutes());
     }
 }

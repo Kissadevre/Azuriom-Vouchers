@@ -8,7 +8,11 @@ use Azuriom\Models\Permission;
 use Azuriom\Plugin\Vouchers\Commands\ProcessDeliveriesCommand;
 use Azuriom\Plugin\Vouchers\Models\Reward;
 use Azuriom\Plugin\Vouchers\Models\Voucher;
+use Azuriom\Plugin\Vouchers\Services\VoucherSettings;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 
 class VouchersServiceProvider extends BasePluginServiceProvider
 {
@@ -23,6 +27,7 @@ class VouchersServiceProvider extends BasePluginServiceProvider
         $this->registerRouteDescriptions();
         $this->registerAdminNavigation();
         $this->registerSchedule();
+        $this->registerRateLimiter();
 
         $this->commands(ProcessDeliveriesCommand::class);
 
@@ -34,6 +39,12 @@ class VouchersServiceProvider extends BasePluginServiceProvider
             Voucher::class,
             Reward::class,
         ], 'vouchers::admin.logs');
+
+        ActionLog::registerLogs('vouchers.settings.updated', [
+            'icon' => 'ticket-perforated',
+            'color' => 'info',
+            'message' => 'vouchers::admin.logs.settings',
+        ]);
     }
 
     /**
@@ -44,6 +55,23 @@ class VouchersServiceProvider extends BasePluginServiceProvider
         $schedule->command('vouchers:deliveries')
             ->everyFiveMinutes()
             ->withoutOverlapping(15);
+    }
+
+    /**
+     * Register the configurable public redemption rate limiter.
+     */
+    protected function registerRateLimiter(): void
+    {
+        RateLimiter::for('vouchers-redeem', function (Request $request) {
+            $attempts = $this->app->make(VoucherSettings::class)->rateLimit();
+
+            return Limit::perMinute($attempts)
+                ->by('vouchers-redeem|'.$request->ip())
+                ->response(fn (Request $request, array $headers) => to_route('vouchers.index')
+                    ->withErrors(['code' => trans('vouchers::messages.errors.too_many_attempts')])
+                    ->withInput($request->only('username'))
+                    ->withHeaders($headers));
+        });
     }
 
     /**
@@ -68,9 +96,15 @@ class VouchersServiceProvider extends BasePluginServiceProvider
         return [
             'vouchers' => [
                 'name' => trans('vouchers::admin.title'),
+                'type' => 'dropdown',
                 'icon' => 'bi bi-ticket-perforated',
                 'permission' => 'vouchers.admin',
-                'route' => 'vouchers.admin.codes.index',
+                'route' => 'vouchers.admin.*',
+                'items' => [
+                    'vouchers.admin.settings' => trans('vouchers::admin.nav.settings'),
+                    'vouchers.admin.codes.index' => trans('vouchers::admin.nav.codes'),
+                    'vouchers.admin.redemptions.index' => trans('vouchers::admin.nav.redemptions'),
+                ],
             ],
         ];
     }

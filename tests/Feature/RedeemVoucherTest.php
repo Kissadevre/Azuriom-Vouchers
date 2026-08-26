@@ -5,6 +5,7 @@ namespace Azuriom\Plugin\Vouchers\Tests\Feature;
 use Azuriom\Models\Server;
 use Azuriom\Models\Role;
 use Azuriom\Models\User;
+use Azuriom\Models\Setting;
 use Azuriom\Plugin\Shop\Events\PackageDelivered;
 use Azuriom\Plugin\Shop\Events\PaymentPaid;
 use Azuriom\Plugin\Shop\Models\Payment;
@@ -26,6 +27,35 @@ use Illuminate\Support\Str;
 
 class RedeemVoucherTest extends TestCase
 {
+    public function test_global_setting_stops_every_voucher_redemption(): void
+    {
+        $user = $this->createUser();
+        $voucher = $this->createVoucher(maxPerUser: 1);
+        $voucher->rewards()->create([
+            'type' => Reward::TYPE_MONEY,
+            'configuration' => ['amount' => 10],
+            'position' => 0,
+        ]);
+        Setting::updateSettings('vouchers.enabled', false);
+
+        try {
+            app(RedeemVoucher::class)->redeem(
+                'welcome-2026',
+                $user,
+                null,
+                (string) Str::uuid(),
+                '127.0.0.1',
+            );
+            $this->fail('A voucher was redeemed while the plugin was globally disabled.');
+        } catch (VoucherRedemptionException $exception) {
+            $this->assertSame(VoucherRedemptionException::DISABLED, $exception->reason);
+        }
+
+        $this->assertSame(0.0, $user->fresh()->money);
+        $this->assertSame(0, $voucher->fresh()->redemptions_count);
+        $this->assertSame(0, Redemption::query()->count());
+    }
+
     public function test_multiple_point_rewards_are_delivered_and_request_idempotent(): void
     {
         $user = $this->createUser();

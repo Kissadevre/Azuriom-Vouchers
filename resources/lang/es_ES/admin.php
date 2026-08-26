@@ -4,6 +4,35 @@ return [
     'title' => 'Códigos de canje',
     'permission' => 'Administrar códigos de canje',
 
+    'nav' => [
+        'settings' => 'Ajustes',
+        'codes' => 'Códigos',
+        'redemptions' => 'Registros',
+    ],
+
+    'settings' => [
+        'title' => 'Ajustes de Vouchers',
+        'enabled' => 'Habilitar el canje de vouchers',
+        'enabled_help' => 'Al desactivarlo, se detendrán todos los canjes sin modificar ni deshabilitar los códigos individuales.',
+        'rate_limit' => 'Límite de intentos de canje',
+        'attempts_per_minute' => 'intentos por minuto y dirección IP',
+        'rate_limit_help' => 'Limita todos los intentos de una misma dirección IP para reducir la adivinación de códigos y el uso malintencionado.',
+        'updated' => 'Los ajustes de Vouchers fueron actualizados.',
+    ],
+
+    'redemptions' => [
+        'title' => 'Registros de canje',
+        'description' => 'Consulta cada canje, su destinatario, el usuario que lo solicitó y el estado de entrega.',
+        'empty' => 'Todavía no se ha canjeado ningún voucher.',
+        'reference' => 'Referencia',
+        'voucher' => 'Voucher',
+        'recipient' => 'Destinatario',
+        'redeemer' => 'Canjeado por',
+        'guest' => 'Invitado',
+        'ip_address' => 'Dirección IP',
+        'date' => 'Fecha',
+    ],
+
     'codes' => [
         'title' => 'Códigos de canje',
         'description' => 'Crea códigos, controla quién puede canjearlos y asigna una o varias recompensas.',
@@ -91,6 +120,14 @@ return [
         'exhausted' => ['label' => 'Agotado', 'color' => 'danger'],
     ],
 
+    'redemption_status' => [
+        'processing' => ['label' => 'Procesando', 'color' => 'info'],
+        'completed' => ['label' => 'Completado', 'color' => 'success'],
+        'partial' => ['label' => 'Entrega parcial', 'color' => 'warning'],
+        'review_required' => ['label' => 'Requiere revisión', 'color' => 'warning'],
+        'failed' => ['label' => 'Fallido', 'color' => 'danger'],
+    ],
+
     'validation' => [
         'code_format' => 'El código debe contener entre 8 y 64 letras o números.',
         'code_unique' => 'Este código de canje ya está en uso.',
@@ -112,6 +149,7 @@ return [
     'unlimited' => 'Ilimitado',
 
     'logs' => [
+        'settings' => 'Actualizó los ajustes de Vouchers.',
         'vouchers-codes' => [
             'created' => 'Creó el código de canje #:id.',
             'updated' => 'Actualizó el código de canje #:id.',

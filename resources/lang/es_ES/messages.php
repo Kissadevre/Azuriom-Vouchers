@@ -29,5 +29,7 @@ return [
         'recipient_not_found' => 'No se encontró una cuenta que coincida.',
         'user_limit_reached' => 'Esta cuenta ya alcanzó el límite de canjes para este código.',
         'invalid_configuration' => 'No se puede entregar este código. Comunícate con un miembro del equipo.',
+        'disabled' => 'El canje de vouchers está desactivado temporalmente.',
+        'too_many_attempts' => 'Has realizado demasiados intentos. Espera un minuto antes de volver a intentarlo.',
     ],
 ];

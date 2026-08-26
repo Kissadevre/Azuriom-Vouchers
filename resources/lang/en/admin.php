@@ -4,6 +4,35 @@ return [
     'title' => 'Vouchers',
     'permission' => 'Manage vouchers',
 
+    'nav' => [
+        'settings' => 'Settings',
+        'codes' => 'Codes',
+        'redemptions' => 'Logs',
+    ],
+
+    'settings' => [
+        'title' => 'Voucher settings',
+        'enabled' => 'Enable voucher redemptions',
+        'enabled_help' => 'When disabled, every voucher redemption is paused without changing or disabling individual codes.',
+        'rate_limit' => 'Redemption rate limit',
+        'attempts_per_minute' => 'attempts per minute and IP address',
+        'rate_limit_help' => 'Limits all redemption attempts from the same IP address to reduce code guessing and abusive use.',
+        'updated' => 'The voucher settings have been updated.',
+    ],
+
+    'redemptions' => [
+        'title' => 'Voucher redemption logs',
+        'description' => 'Review every voucher redemption, its recipient, authenticated actor and delivery state.',
+        'empty' => 'No voucher has been redeemed yet.',
+        'reference' => 'Reference',
+        'voucher' => 'Voucher',
+        'recipient' => 'Recipient',
+        'redeemer' => 'Redeemed by',
+        'guest' => 'Guest',
+        'ip_address' => 'IP address',
+        'date' => 'Date',
+    ],
+
     'codes' => [
         'title' => 'Voucher codes',
         'description' => 'Create codes, control who can redeem them and attach one or more rewards.',
@@ -91,6 +120,14 @@ return [
         'exhausted' => ['label' => 'Exhausted', 'color' => 'danger'],
     ],
 
+    'redemption_status' => [
+        'processing' => ['label' => 'Processing', 'color' => 'info'],
+        'completed' => ['label' => 'Completed', 'color' => 'success'],
+        'partial' => ['label' => 'Partially delivered', 'color' => 'warning'],
+        'review_required' => ['label' => 'Review required', 'color' => 'warning'],
+        'failed' => ['label' => 'Failed', 'color' => 'danger'],
+    ],
+
     'validation' => [
         'code_format' => 'The code must contain between 8 and 64 letters or numbers.',
         'code_unique' => 'This voucher code is already in use.',
@@ -112,6 +149,7 @@ return [
     'unlimited' => 'Unlimited',
 
     'logs' => [
+        'settings' => 'Updated the Vouchers settings.',
         'vouchers-codes' => [
             'created' => 'Created voucher code #:id.',
             'updated' => 'Updated voucher code #:id.',

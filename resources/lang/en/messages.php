@@ -29,5 +29,7 @@ return [
         'recipient_not_found' => 'No matching account was found.',
         'user_limit_reached' => 'This account has already reached the redemption limit for this voucher.',
         'invalid_configuration' => 'This voucher cannot be delivered. Please contact a staff member.',
+        'disabled' => 'Voucher redemptions are temporarily disabled.',
+        'too_many_attempts' => 'Too many redemption attempts. Please wait one minute before trying again.',
     ],
 ];

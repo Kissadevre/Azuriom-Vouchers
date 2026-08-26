@@ -10,6 +10,11 @@
                     <h1 class="h3">{{ trans('vouchers::messages.title') }}</h1>
                     <p class="text-muted">{{ trans('vouchers::messages.description') }}</p>
 
+                    @if(! $vouchersEnabled)
+                        <div class="alert alert-warning mb-0" role="status">
+                            <i class="bi bi-pause-circle"></i> {{ trans('vouchers::messages.errors.disabled') }}
+                        </div>
+                    @else
                     <form action="{{ route('vouchers.redeem') }}" method="POST">
                         @csrf
                         <input type="hidden" name="request_token" value="{{ old('request_token', $requestToken) }}">
@@ -41,6 +46,7 @@
                             <i class="bi bi-ticket-perforated"></i> {{ trans('vouchers::messages.actions.redeem') }}
                         </button>
                     </form>
+                    @endif
                 </div>
             </div>
         </div>
