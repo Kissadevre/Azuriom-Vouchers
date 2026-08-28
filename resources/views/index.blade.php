@@ -154,3 +154,21 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');  // URL: ?code=XXXX-XXXX
+
+    if (code) {
+        const input = document.getElementById('codeInput');
+        if (input) {
+            input.value = code;
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+});
+</script>
+@endpush
