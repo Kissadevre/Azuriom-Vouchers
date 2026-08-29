@@ -12,9 +12,13 @@ class VoucherCodeGenerator
     /**
      * Generate a readable and unique voucher code.
      */
-    public function generate(int $groups = 4, int $charactersPerGroup = 4): string
+    public function generate(int $groups = 3, int $charactersPerGroup = 4): string
     {
-        if ($groups < 1 || $groups > 8 || $charactersPerGroup < 2 || $charactersPerGroup > 8) {
+        $displayLength = ($groups * $charactersPerGroup) + ($groups - 1);
+
+        if ($groups < 1 || $groups > 8
+            || $charactersPerGroup < 2 || $charactersPerGroup > 8
+            || $displayLength > Voucher::CODE_MAX_LENGTH) {
             throw new RuntimeException('Invalid voucher code dimensions.');
         }
 

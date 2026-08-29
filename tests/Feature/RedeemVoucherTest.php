@@ -185,9 +185,9 @@ class RedeemVoucherTest extends TestCase
 
         foreach ([
             ['code' => 'WELCOME-2026', 'user' => $higherUser],
-            ['code' => 'ADMIN-ROLE-2026', 'user' => $adminUser],
+            ['code' => 'ADMIN-ROLE-26', 'user' => $adminUser],
             ['code' => 'RAW-ADMIN-2026', 'user' => $rawAdminUser],
-            ['code' => 'EQUAL-ROLE-2026', 'user' => $equalUser],
+            ['code' => 'EQUAL-ROLE-26', 'user' => $equalUser],
         ] as $case) {
             $voucher = $this->createVoucher(maxPerUser: 1, code: $case['code']);
             $voucher->rewards()->create([

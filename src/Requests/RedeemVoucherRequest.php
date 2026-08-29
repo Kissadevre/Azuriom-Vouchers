@@ -2,6 +2,7 @@
 
 namespace Azuriom\Plugin\Vouchers\Requests;
 
+use Azuriom\Plugin\Vouchers\Models\Voucher;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -28,7 +29,17 @@ class RedeemVoucherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['required', 'string', 'max:80'],
+            'code' => [
+                'required',
+                'string',
+                'min:'.Voucher::CODE_MIN_LENGTH,
+                'max:'.Voucher::CODE_MAX_LENGTH,
+                function (string $attribute, mixed $value, \Closure $fail) {
+                    if (! is_string($value) || ! Voucher::isValidCodeFormat($value)) {
+                        $fail(trans('vouchers::messages.errors.unavailable'));
+                    }
+                },
+            ],
             'username' => ['nullable', 'string', 'max:100'],
             'request_token' => ['required', 'uuid'],
         ];

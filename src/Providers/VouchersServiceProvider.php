@@ -26,6 +26,7 @@ class VouchersServiceProvider extends BasePluginServiceProvider
         $this->loadMigrations();
         $this->registerRouteDescriptions();
         $this->registerAdminNavigation();
+        $this->registerUserNavigation();
         $this->registerSchedule();
         $this->registerRateLimiter();
 
@@ -105,6 +106,26 @@ class VouchersServiceProvider extends BasePluginServiceProvider
                     'vouchers.admin.codes.index' => trans('vouchers::admin.nav.codes'),
                     'vouchers.admin.redemptions.index' => trans('vouchers::admin.nav.redemptions'),
                 ],
+            ],
+        ];
+    }
+
+    /**
+     * Return the optional entry shown in the authenticated user menu.
+     *
+     * @return array<string, array<string, string>>
+     */
+    protected function userNavigation(): array
+    {
+        if (! $this->app->make(VoucherSettings::class)->showInUserMenu()) {
+            return [];
+        }
+
+        return [
+            'vouchers' => [
+                'route' => 'vouchers.index',
+                'name' => trans('vouchers::messages.nav.vouchers'),
+                'icon' => 'bi '.$this->app->make(VoucherSettings::class)->userMenuIcon(),
             ],
         ];
     }

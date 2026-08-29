@@ -9,6 +9,10 @@ return [
     'delivery_processing' => 'El código fue reservado y sus recompensas siguen procesándose. Referencia: :reference.',
     'delivery_issue' => 'El código fue reservado, pero al menos una recompensa requiere revisión del equipo. Referencia: :reference.',
 
+    'nav' => [
+        'vouchers' => 'Vouchers',
+    ],
+
     'fields' => [
         'code' => 'Código de canje',
         'username' => 'Nombre de usuario',
@@ -19,7 +23,7 @@ return [
     ],
 
     'help' => [
-        'code' => 'Puedes escribir el código con mayúsculas o minúsculas.',
+        'code' => 'Usa entre 8 y 14 letras, números o guiones. Puedes escribirlo con mayúsculas o minúsculas.',
         'guest' => 'Ingresa el identificador de una cuenta existente. Los códigos que requieran autenticación te pedirán iniciar sesión.',
     ],
 

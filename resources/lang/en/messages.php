@@ -9,6 +9,10 @@ return [
     'delivery_processing' => 'The voucher was reserved and its rewards are still processing. Reference: :reference.',
     'delivery_issue' => 'The voucher was reserved, but at least one reward needs staff review. Reference: :reference.',
 
+    'nav' => [
+        'vouchers' => 'Vouchers',
+    ],
+
     'fields' => [
         'code' => 'Voucher code',
         'username' => 'Username',
@@ -19,7 +23,7 @@ return [
     ],
 
     'help' => [
-        'code' => 'You can enter the code using uppercase or lowercase letters.',
+        'code' => 'Use 8 to 14 letters, numbers or hyphens. Uppercase and lowercase letters are accepted.',
         'guest' => 'Enter the identifier of an existing account. Codes that require authentication will ask you to sign in.',
     ],
 

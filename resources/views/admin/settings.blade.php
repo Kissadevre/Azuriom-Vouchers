@@ -30,6 +30,29 @@
                 </div>
 
                 <div class="vouchers-admin-section mb-4">
+                    <div class="form-check form-switch">
+                        <input type="hidden" name="user_menu" value="0">
+                        <input type="checkbox" class="form-check-input" id="vouchersUserMenuSwitch" name="user_menu" value="1" @checked(old('user_menu', $showInUserMenu))>
+                        <label class="form-check-label fw-semibold" for="vouchersUserMenuSwitch">{{ trans('vouchers::admin.settings.user_menu') }}</label>
+                        <div class="form-text">{{ trans('vouchers::admin.settings.user_menu_help') }}</div>
+                    </div>
+
+                    <div class="mt-3">
+                        <label class="form-label fw-semibold" for="vouchersUserMenuIconInput">{{ trans('vouchers::admin.settings.user_menu_icon') }}</label>
+                        <div class="input-group @error('user_menu_icon') has-validation @enderror">
+                            <span class="input-group-text" aria-hidden="true">
+                                <i class="bi {{ old('user_menu_icon', $userMenuIcon) }}" id="vouchersUserMenuIconPreview"></i>
+                            </span>
+                            <input type="text" class="form-control font-monospace @error('user_menu_icon') is-invalid @enderror" id="vouchersUserMenuIconInput" name="user_menu_icon" value="{{ old('user_menu_icon', $userMenuIcon) }}" maxlength="64" pattern="bi-[a-z0-9]+(?:-[a-z0-9]+)*" placeholder="bi-ticket-perforated" autocomplete="off" required>
+                            @error('user_menu_icon')
+                                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
+                        </div>
+                        <div class="form-text">{!! trans('vouchers::admin.settings.user_menu_icon_help') !!}</div>
+                    </div>
+                </div>
+
+                <div class="vouchers-admin-section mb-4">
                     <div class="row align-items-center g-3">
                         <div class="col-lg-5">
                             <label class="form-label fw-semibold mb-1" for="rateLimitInput">{{ trans('vouchers::admin.settings.rate_limit') }}</label>
@@ -54,3 +77,16 @@
         </div>
     </div>
 @endsection
+
+@push('footer-scripts')
+    <script>
+        document.getElementById('vouchersUserMenuIconInput').addEventListener('input', function () {
+            const icon = this.value.trim().toLowerCase();
+            const preview = document.getElementById('vouchersUserMenuIconPreview');
+
+            preview.className = /^bi-[a-z0-9]+(?:-[a-z0-9]+)*$/.test(icon)
+                ? `bi ${icon}`
+                : 'bi bi-question-circle';
+        });
+    </script>
+@endpush

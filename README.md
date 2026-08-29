@@ -12,10 +12,13 @@ Vouchers is an Azuriom plugin for creating redeemable codes and granting one or 
 ## Architecture
 
 - Voucher codes are encrypted at rest and indexed through a normalized keyed hash.
+- Voucher codes use 8–14 URL-safe letters, numbers or hyphens; generated codes use the `XXXX-XXXX-XXXX` format.
+- Public links can prefill the redemption form with `?code=XXXX-XXXX-XXXX` without redeeming automatically.
 - Date windows, global limits and per-user limits are stored on each voucher.
 - Every voucher can contain multiple ordered rewards.
 - Every redemption creates an immutable execution ledger for its rewards.
 - Administrators can pause every redemption globally and configure a per-IP attempts-per-minute limit.
+- Administrators can optionally expose a Vouchers shortcut with a configurable Bootstrap Icon in the authenticated user dropdown; it is disabled by default.
 - Voucher redemptions automatically use Azuriom's configured reCAPTCHA, hCaptcha or Turnstile protection.
 - The administration panel exposes the complete redemption ledger with recipients, actors, IP addresses and delivery states.
 - Shop is an optional dependency; package rewards are available when Shop is enabled.

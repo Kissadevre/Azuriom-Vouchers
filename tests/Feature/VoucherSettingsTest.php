@@ -17,14 +17,50 @@ class VoucherSettingsTest extends TestCase
 
         $this->assertTrue($settings->enabled());
         $this->assertSame(10, $settings->rateLimit());
+        $this->assertFalse($settings->showInUserMenu());
+        $this->assertSame(VoucherSettings::DEFAULT_USER_MENU_ICON, $settings->userMenuIcon());
 
         Setting::updateSettings([
             VoucherSettings::ENABLED_KEY => false,
             VoucherSettings::RATE_LIMIT_KEY => 7,
+            VoucherSettings::USER_MENU_KEY => true,
+            VoucherSettings::USER_MENU_ICON_KEY => 'bi-gift-fill',
         ]);
 
         $this->assertFalse($settings->enabled());
         $this->assertSame(7, $settings->rateLimit());
+        $this->assertTrue($settings->showInUserMenu());
+        $this->assertSame('bi-gift-fill', $settings->userMenuIcon());
+    }
+
+    public function test_user_menu_navigation_is_registered_only_when_enabled(): void
+    {
+        $provider = new VouchersServiceProvider($this->app);
+        $navigation = new \ReflectionMethod($provider, 'userNavigation');
+
+        $this->assertSame([], $navigation->invoke($provider));
+
+        Setting::updateSettings(VoucherSettings::USER_MENU_KEY, true);
+
+        $item = $navigation->invoke($provider)['vouchers'];
+
+        $this->assertSame('vouchers.index', $item['route']);
+        $this->assertSame('bi bi-ticket-perforated', $item['icon']);
+
+        Setting::updateSettings(VoucherSettings::USER_MENU_ICON_KEY, 'bi-gift-fill');
+
+        $customItem = $navigation->invoke($provider)['vouchers'];
+        $this->assertSame('bi bi-gift-fill', $customItem['icon']);
+    }
+
+    public function test_invalid_stored_user_menu_icons_fall_back_safely(): void
+    {
+        Setting::updateSettings(VoucherSettings::USER_MENU_ICON_KEY, 'bi-ticket text-danger');
+
+        $this->assertSame(
+            VoucherSettings::DEFAULT_USER_MENU_ICON,
+            app(VoucherSettings::class)->userMenuIcon(),
+        );
     }
 
     public function test_named_rate_limiter_uses_current_setting_and_ip_address(): void

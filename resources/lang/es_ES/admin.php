@@ -16,6 +16,10 @@ return [
         'security_description' => 'Controla el acceso global y limita los intentos de canje sospechosos.',
         'enabled' => 'Habilitar el canje de vouchers',
         'enabled_help' => 'Al desactivarlo, se detendrán todos los canjes sin modificar ni deshabilitar los códigos individuales.',
+        'user_menu' => 'Mostrar Vouchers en el menú del usuario',
+        'user_menu_help' => 'Agrega un acceso a la página de canje en el menú desplegable de los usuarios con sesión iniciada.',
+        'user_menu_icon' => 'Icono del menú',
+        'user_menu_icon_help' => 'Escribe una clase de <a href="https://icons.getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap Icons</a>, por ejemplo <code>bi-ticket-perforated</code>.',
         'rate_limit' => 'Límite de intentos de canje',
         'attempts_per_minute' => 'intentos por minuto y dirección IP',
         'rate_limit_help' => 'Limita todos los intentos de una misma dirección IP para reducir la adivinación de códigos y el uso malintencionado.',
@@ -72,7 +76,7 @@ return [
     ],
 
     'help' => [
-        'code' => 'Usa entre 8 y 64 letras o números. Los espacios y guiones se ignoran al canjear.',
+        'code' => 'Usa entre 8 y 14 caracteres. Solo se admiten letras de A a Z, números y guiones.',
         'max_redemptions' => 'Usa 1 para un código de un solo uso o déjalo vacío para permitir canjes ilimitados.',
         'max_redemptions_per_user' => 'Usa 1 para impedir que la misma cuenta canjee este código más de una vez. Déjalo vacío para permitir canjes ilimitados por cuenta.',
         'requires_authentication' => 'Si se desactiva, los invitados deberán indicar el nombre de una cuenta existente en Azuriom.',
@@ -140,7 +144,7 @@ return [
     ],
 
     'validation' => [
-        'code_format' => 'El código debe contener entre 8 y 64 letras o números.',
+        'code_format' => 'El código debe contener entre 8 y 14 caracteres y usar únicamente letras de A a Z, números o guiones.',
         'code_unique' => 'Este código de canje ya está en uso.',
         'expires_after_start' => 'La fecha de finalización debe ser posterior a la fecha de inicio.',
         'stale_revision' => 'Otro administrador modificó este código. Recarga la página y revisa sus cambios antes de guardar de nuevo.',

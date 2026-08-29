@@ -86,7 +86,7 @@ class VoucherRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'max:100'],
-            'code' => ['required', 'string', 'max:80'],
+            'code' => ['required', 'string', 'min:'.Voucher::CODE_MIN_LENGTH, 'max:'.Voucher::CODE_MAX_LENGTH],
             'is_enabled' => ['required', 'boolean'],
             'requires_authentication' => ['required', 'boolean'],
             'max_redemptions' => ['nullable', 'regex:/^[0-9]+$/D', 'integer', 'min:1', 'max:4294967295'],
@@ -156,9 +156,7 @@ class VoucherRequest extends FormRequest
     {
         $validator->after(function (Validator $validator) {
             if (! $validator->errors()->has('code')) {
-                $normalizedCode = Voucher::normalizeCode((string) $this->input('code'));
-
-                if (! preg_match('/^[A-Z0-9]{8,64}$/', $normalizedCode)) {
+                if (! Voucher::isValidCodeFormat((string) $this->input('code'))) {
                     $validator->errors()->add('code', trans('vouchers::admin.validation.code_format'));
                 } else {
                     $query = Voucher::query()->whereCode((string) $this->input('code'));

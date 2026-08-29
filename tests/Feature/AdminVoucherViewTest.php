@@ -17,7 +17,7 @@ class AdminVoucherViewTest extends TestCase
 
         $voucher = new Voucher([
             'name' => 'Test voucher',
-            'code' => 'TESTVOUCHER2026',
+            'code' => 'TEST-CODE-26',
             'is_enabled' => true,
             'requires_authentication' => true,
         ]);
@@ -69,6 +69,18 @@ class AdminVoucherViewTest extends TestCase
         $this->assertStringContainsString('data-integer-input data-active-required', $reward);
     }
 
+    public function test_settings_include_the_optional_user_menu_switch(): void
+    {
+        $settings = file_get_contents(dirname(__DIR__, 2).'/resources/views/admin/settings.blade.php');
+
+        $this->assertStringContainsString('id="vouchersUserMenuSwitch"', $settings);
+        $this->assertStringContainsString('id="vouchersUserMenuIconInput"', $settings);
+        $this->assertStringContainsString('id="vouchersUserMenuIconPreview"', $settings);
+        $this->assertStringContainsString('name="user_menu"', $settings);
+        $this->assertStringContainsString('name="user_menu_icon"', $settings);
+        $this->assertStringContainsString('old(\'user_menu\', $showInUserMenu)', $settings);
+    }
+
     public function test_an_unavailable_internal_role_snapshot_is_rendered_safely(): void
     {
         $this->app->make('view')->addNamespace('vouchers', dirname(__DIR__, 2).'/resources/views');
@@ -78,7 +90,7 @@ class AdminVoucherViewTest extends TestCase
         $html = view('vouchers::admin.codes._form', [
             'voucher' => new Voucher([
                 'name' => 'Role voucher',
-                'code' => 'ROLEVOUCHER2026',
+                'code' => 'ROLE-CODE-26',
                 'is_enabled' => true,
                 'requires_authentication' => true,
             ]),

@@ -46,7 +46,7 @@
     <div class="mb-3 col-md-6">
         <label class="form-label" for="codeInput">{{ trans('vouchers::admin.fields.code') }}</label>
         <div class="input-group @error('code') has-validation @enderror">
-            <input type="text" class="form-control font-monospace @error('code') is-invalid @enderror" id="codeInput" name="code" value="{{ $safeOld('code', $voucher->code) }}" maxlength="80" autocomplete="off" required>
+            <input type="text" class="form-control font-monospace text-uppercase @error('code') is-invalid @enderror" id="codeInput" name="code" value="{{ $safeOld('code', $voucher->code) }}" minlength="8" maxlength="14" pattern="[A-Za-z0-9-]{8,14}" autocomplete="off" required>
             <button type="button" class="btn btn-outline-secondary" id="generateCodeButton">
                 <i class="bi bi-shuffle"></i> {{ trans('vouchers::admin.actions.generate') }}
             </button>
@@ -181,6 +181,12 @@
 
 @push('footer-scripts')
     <script>
+        const codeInput = document.getElementById('codeInput');
+
+        codeInput.addEventListener('input', function () {
+            this.value = this.value.toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 14);
+        });
+
         document.getElementById('generateCodeButton').addEventListener('click', function () {
             const button = this;
             button.disabled = true;

@@ -89,8 +89,20 @@ class VoucherModelTest extends TestCase
 
         $second = $generator->generate();
 
-        $this->assertMatchesRegularExpression('/^[A-HJ-NP-Z2-9]{4}(?:-[A-HJ-NP-Z2-9]{4}){3}$/', $first);
+        $this->assertMatchesRegularExpression('/^[A-HJ-NP-Z2-9]{4}(?:-[A-HJ-NP-Z2-9]{4}){2}$/', $first);
+        $this->assertSame(Voucher::CODE_MAX_LENGTH, strlen($first));
         $this->assertNotSame($first, $second);
+    }
+
+    public function test_code_format_accepts_only_the_supported_fourteen_character_alphabet(): void
+    {
+        foreach (['TEST-1234', 'ABCD-EFGH-12', 'ABCDEFGHIJKLMN'] as $code) {
+            $this->assertTrue(Voucher::isValidCodeFormat($code));
+        }
+
+        foreach (['SHORT-1', 'TOO-LONG-CODE-1', 'TEST_CODE', 'TEST CODE', 'TEST.1234', '--------'] as $code) {
+            $this->assertFalse(Voucher::isValidCodeFormat($code));
+        }
     }
 
     public function test_shop_catalog_is_safely_empty_when_the_optional_plugin_is_unavailable(): void
