@@ -17,7 +17,7 @@ class AdminVoucherViewTest extends TestCase
 
         $voucher = new Voucher([
             'name' => 'Test voucher',
-            'code' => 'TESTVOUCHER2026',
+            'code' => 'TEST-CODE-26',
             'is_enabled' => true,
             'requires_authentication' => true,
         ]);
@@ -78,7 +78,7 @@ class AdminVoucherViewTest extends TestCase
         $html = view('vouchers::admin.codes._form', [
             'voucher' => new Voucher([
                 'name' => 'Role voucher',
-                'code' => 'ROLEVOUCHER2026',
+                'code' => 'ROLE-CODE-26',
                 'is_enabled' => true,
                 'requires_authentication' => true,
             ]),

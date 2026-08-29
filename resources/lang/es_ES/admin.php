@@ -72,7 +72,7 @@ return [
     ],
 
     'help' => [
-        'code' => 'Usa entre 8 y 64 letras o números. Los espacios y guiones se ignoran al canjear.',
+        'code' => 'Usa entre 8 y 14 caracteres. Solo se admiten letras de A a Z, números y guiones.',
         'max_redemptions' => 'Usa 1 para un código de un solo uso o déjalo vacío para permitir canjes ilimitados.',
         'max_redemptions_per_user' => 'Usa 1 para impedir que la misma cuenta canjee este código más de una vez. Déjalo vacío para permitir canjes ilimitados por cuenta.',
         'requires_authentication' => 'Si se desactiva, los invitados deberán indicar el nombre de una cuenta existente en Azuriom.',
@@ -140,7 +140,7 @@ return [
     ],
 
     'validation' => [
-        'code_format' => 'El código debe contener entre 8 y 64 letras o números.',
+        'code_format' => 'El código debe contener entre 8 y 14 caracteres y usar únicamente letras de A a Z, números o guiones.',
         'code_unique' => 'Este código de canje ya está en uso.',
         'expires_after_start' => 'La fecha de finalización debe ser posterior a la fecha de inicio.',
         'stale_revision' => 'Otro administrador modificó este código. Recarga la página y revisa sus cambios antes de guardar de nuevo.',

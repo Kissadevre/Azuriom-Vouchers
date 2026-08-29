@@ -15,6 +15,23 @@ use Illuminate\Validation\ValidationException;
 
 class AdminVoucherRequestTest extends TestCase
 {
+    public function test_voucher_codes_are_limited_to_the_supported_url_safe_format(): void
+    {
+        foreach (['TEST-1234', 'ABCD-EFGH-12', 'ABCDEFGHIJKLMN'] as $code) {
+            $this->assertSame([], $this->validateRewards([
+                ['type' => Reward::TYPE_MONEY, 'amount' => '25'],
+            ], voucher: ['code' => $code]));
+        }
+
+        foreach (['SHORT-1', 'TOO-LONG-CODE-1', 'TEST_CODE', 'TEST CODE', 'TEST.1234'] as $code) {
+            $errors = $this->validateRewards([
+                ['type' => Reward::TYPE_MONEY, 'amount' => '25'],
+            ], voucher: ['code' => $code]);
+
+            $this->assertArrayHasKey('code', $errors);
+        }
+    }
+
     public function test_integer_fields_reject_decimals_letters_and_numeric_notation(): void
     {
         $this->assertSame([], $this->validateReward([

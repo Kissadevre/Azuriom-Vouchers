@@ -114,7 +114,7 @@
                                 <label class="form-label fw-semibold" for="codeInput">{{ trans('vouchers::messages.fields.code') }}</label>
                                 <div class="voucher-input-wrap">
                                     <i class="bi bi-key" aria-hidden="true"></i>
-                                    <input type="text" class="form-control form-control-lg font-monospace text-uppercase voucher-code-input @error('code') is-invalid @enderror" id="codeInput" name="code" maxlength="80" placeholder="{{ trans('vouchers::messages.placeholders.code') }}" aria-describedby="codeHelp" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" required autofocus>
+                                    <input type="text" class="form-control form-control-lg font-monospace text-uppercase voucher-code-input @error('code') is-invalid @enderror" id="codeInput" name="code" value="{{ old('code', $initialCode) }}" minlength="8" maxlength="14" pattern="[A-Za-z0-9-]{8,14}" placeholder="{{ trans('vouchers::messages.placeholders.code') }}" aria-describedby="codeHelp" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" required autofocus>
                                 </div>
                                 @error('code')
                                     <div class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></div>

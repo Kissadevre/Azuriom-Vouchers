@@ -72,7 +72,7 @@ return [
     ],
 
     'help' => [
-        'code' => 'Use 8 to 64 letters or numbers. Spaces and hyphens are ignored when redeeming.',
+        'code' => 'Use 8 to 14 characters. Only letters A to Z, numbers and hyphens are accepted.',
         'max_redemptions' => 'Use 1 for a single-use code, or leave blank for unlimited redemptions.',
         'max_redemptions_per_user' => 'Use 1 to prevent the same account from redeeming this code more than once. Leave blank for unlimited redemptions per account.',
         'requires_authentication' => 'When disabled, guests must provide the name of an existing Azuriom account.',
@@ -140,7 +140,7 @@ return [
     ],
 
     'validation' => [
-        'code_format' => 'The code must contain between 8 and 64 letters or numbers.',
+        'code_format' => 'The code must contain 8 to 14 characters and use only letters A to Z, numbers or hyphens.',
         'code_unique' => 'This voucher code is already in use.',
         'expires_after_start' => 'The end date must be later than the start date.',
         'stale_revision' => 'This voucher was changed by another administrator. Reload the page and review their changes before saving again.',

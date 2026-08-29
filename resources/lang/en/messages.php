@@ -19,7 +19,7 @@ return [
     ],
 
     'help' => [
-        'code' => 'You can enter the code using uppercase or lowercase letters.',
+        'code' => 'Use 8 to 14 letters, numbers or hyphens. Uppercase and lowercase letters are accepted.',
         'guest' => 'Enter the identifier of an existing account. Codes that require authentication will ask you to sign in.',
     ],
 

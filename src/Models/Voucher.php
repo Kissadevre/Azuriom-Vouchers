@@ -33,6 +33,10 @@ use LogicException;
  */
 class Voucher extends Model
 {
+    public const CODE_MIN_LENGTH = 8;
+
+    public const CODE_MAX_LENGTH = 14;
+
     use Loggable;
 
     public const STATUS_ACTIVE = 'active';
@@ -166,6 +170,25 @@ class Voucher extends Model
     }
 
     /**
+     * Determine whether a display code uses the supported public format.
+     */
+    public static function isValidCodeFormat(string $code): bool
+    {
+        $displayCode = Str::upper(trim($code));
+        $length = strlen($displayCode);
+
+        if ($length < self::CODE_MIN_LENGTH || $length > self::CODE_MAX_LENGTH) {
+            return false;
+        }
+
+        if (preg_match('/^[A-Z0-9-]+$/D', $displayCode) !== 1) {
+            return false;
+        }
+
+        return preg_match('/^[A-Z0-9]{8,14}$/D', self::normalizeCode($displayCode)) === 1;
+    }
+
+    /**
      * Create the deterministic lookup hash for a code.
      */
     public static function hashCode(string $code, ?string $key = null): string
@@ -205,8 +228,8 @@ class Voucher extends Model
                 $displayCode = Str::upper(trim($value));
                 $normalizedCode = self::normalizeCode($displayCode);
 
-                if (! preg_match('/^[A-Z0-9]{8,64}$/', $normalizedCode)) {
-                    throw new InvalidArgumentException('Voucher codes must contain between 8 and 64 letters or numbers.');
+                if (! self::isValidCodeFormat($displayCode)) {
+                    throw new InvalidArgumentException('Voucher codes must contain 8 to 14 letters, numbers or hyphens.');
                 }
 
                 return [

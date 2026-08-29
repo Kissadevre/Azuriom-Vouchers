@@ -5,11 +5,13 @@ namespace Azuriom\Plugin\Vouchers\Controllers;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Plugin\Vouchers\Exceptions\VoucherRedemptionException;
 use Azuriom\Plugin\Vouchers\Models\Redemption;
+use Azuriom\Plugin\Vouchers\Models\Voucher;
 use Azuriom\Plugin\Vouchers\Requests\RedeemVoucherRequest;
 use Azuriom\Plugin\Vouchers\Services\RedeemVoucher;
 use Azuriom\Plugin\Vouchers\Services\VoucherSettings;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class VoucherController extends Controller
@@ -17,13 +19,28 @@ class VoucherController extends Controller
     /**
      * Show the public voucher redemption page.
      */
-    public function index(VoucherSettings $settings): View
+    public function index(Request $request, VoucherSettings $settings): View
     {
         return view('vouchers::index', [
             'requestToken' => (string) Str::uuid(),
             'userAttributeName' => game()->userPrimaryAttributeName(),
             'vouchersEnabled' => $settings->enabled(),
+            'initialCode' => $this->initialCode($request),
         ]);
+    }
+
+    /**
+     * Return a valid code supplied by the URL without looking it up or redeeming it.
+     */
+    private function initialCode(Request $request): string
+    {
+        $code = $request->query('code');
+
+        if (! is_string($code) || ! Voucher::isValidCodeFormat($code)) {
+            return '';
+        }
+
+        return Str::upper(trim($code));
     }
 
     /**

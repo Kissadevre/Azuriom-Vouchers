@@ -12,6 +12,8 @@ Vouchers is an Azuriom plugin for creating redeemable codes and granting one or 
 ## Architecture
 
 - Voucher codes are encrypted at rest and indexed through a normalized keyed hash.
+- Voucher codes use 8–14 URL-safe letters, numbers or hyphens; generated codes use the `XXXX-XXXX-XXXX` format.
+- Public links can prefill the redemption form with `?code=XXXX-XXXX-XXXX` without redeeming automatically.
 - Date windows, global limits and per-user limits are stored on each voucher.
 - Every voucher can contain multiple ordered rewards.
 - Every redemption creates an immutable execution ledger for its rewards.
