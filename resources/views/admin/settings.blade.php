@@ -30,6 +30,15 @@
                 </div>
 
                 <div class="vouchers-admin-section mb-4">
+                    <div class="form-check form-switch">
+                        <input type="hidden" name="user_menu" value="0">
+                        <input type="checkbox" class="form-check-input" id="vouchersUserMenuSwitch" name="user_menu" value="1" @checked(old('user_menu', $showInUserMenu))>
+                        <label class="form-check-label fw-semibold" for="vouchersUserMenuSwitch">{{ trans('vouchers::admin.settings.user_menu') }}</label>
+                        <div class="form-text">{{ trans('vouchers::admin.settings.user_menu_help') }}</div>
+                    </div>
+                </div>
+
+                <div class="vouchers-admin-section mb-4">
                     <div class="row align-items-center g-3">
                         <div class="col-lg-5">
                             <label class="form-label fw-semibold mb-1" for="rateLimitInput">{{ trans('vouchers::admin.settings.rate_limit') }}</label>

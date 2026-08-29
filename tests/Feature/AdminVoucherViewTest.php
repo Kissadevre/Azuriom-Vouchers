@@ -69,6 +69,15 @@ class AdminVoucherViewTest extends TestCase
         $this->assertStringContainsString('data-integer-input data-active-required', $reward);
     }
 
+    public function test_settings_include_the_optional_user_menu_switch(): void
+    {
+        $settings = file_get_contents(dirname(__DIR__, 2).'/resources/views/admin/settings.blade.php');
+
+        $this->assertStringContainsString('id="vouchersUserMenuSwitch"', $settings);
+        $this->assertStringContainsString('name="user_menu"', $settings);
+        $this->assertStringContainsString('old(\'user_menu\', $showInUserMenu)', $settings);
+    }
+
     public function test_an_unavailable_internal_role_snapshot_is_rendered_safely(): void
     {
         $this->app->make('view')->addNamespace('vouchers', dirname(__DIR__, 2).'/resources/views');

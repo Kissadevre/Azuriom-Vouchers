@@ -16,6 +16,8 @@ return [
         'security_description' => 'Control global access and limit suspicious redemption attempts.',
         'enabled' => 'Enable voucher redemptions',
         'enabled_help' => 'When disabled, every voucher redemption is paused without changing or disabling individual codes.',
+        'user_menu' => 'Show Vouchers in the user menu',
+        'user_menu_help' => 'Adds a shortcut to the redemption page in the dropdown menu for signed-in users.',
         'rate_limit' => 'Redemption rate limit',
         'attempts_per_minute' => 'attempts per minute and IP address',
         'rate_limit_help' => 'Limits all redemption attempts from the same IP address to reduce code guessing and abusive use.',

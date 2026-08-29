@@ -9,6 +9,10 @@ return [
     'delivery_processing' => 'The voucher was reserved and its rewards are still processing. Reference: :reference.',
     'delivery_issue' => 'The voucher was reserved, but at least one reward needs staff review. Reference: :reference.',
 
+    'nav' => [
+        'vouchers' => 'Vouchers',
+    ],
+
     'fields' => [
         'code' => 'Voucher code',
         'username' => 'Username',

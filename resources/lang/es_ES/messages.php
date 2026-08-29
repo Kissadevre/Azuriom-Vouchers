@@ -9,6 +9,10 @@ return [
     'delivery_processing' => 'El código fue reservado y sus recompensas siguen procesándose. Referencia: :reference.',
     'delivery_issue' => 'El código fue reservado, pero al menos una recompensa requiere revisión del equipo. Referencia: :reference.',
 
+    'nav' => [
+        'vouchers' => 'Vouchers',
+    ],
+
     'fields' => [
         'code' => 'Código de canje',
         'username' => 'Nombre de usuario',

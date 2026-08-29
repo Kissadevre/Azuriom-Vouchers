@@ -16,6 +16,8 @@ return [
         'security_description' => 'Controla el acceso global y limita los intentos de canje sospechosos.',
         'enabled' => 'Habilitar el canje de vouchers',
         'enabled_help' => 'Al desactivarlo, se detendrán todos los canjes sin modificar ni deshabilitar los códigos individuales.',
+        'user_menu' => 'Mostrar Vouchers en el menú del usuario',
+        'user_menu_help' => 'Agrega un acceso a la página de canje en el menú desplegable de los usuarios con sesión iniciada.',
         'rate_limit' => 'Límite de intentos de canje',
         'attempts_per_minute' => 'intentos por minuto y dirección IP',
         'rate_limit_help' => 'Limita todos los intentos de una misma dirección IP para reducir la adivinación de códigos y el uso malintencionado.',

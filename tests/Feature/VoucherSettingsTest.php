@@ -17,14 +17,32 @@ class VoucherSettingsTest extends TestCase
 
         $this->assertTrue($settings->enabled());
         $this->assertSame(10, $settings->rateLimit());
+        $this->assertFalse($settings->showInUserMenu());
 
         Setting::updateSettings([
             VoucherSettings::ENABLED_KEY => false,
             VoucherSettings::RATE_LIMIT_KEY => 7,
+            VoucherSettings::USER_MENU_KEY => true,
         ]);
 
         $this->assertFalse($settings->enabled());
         $this->assertSame(7, $settings->rateLimit());
+        $this->assertTrue($settings->showInUserMenu());
+    }
+
+    public function test_user_menu_navigation_is_registered_only_when_enabled(): void
+    {
+        $provider = new VouchersServiceProvider($this->app);
+        $navigation = new \ReflectionMethod($provider, 'userNavigation');
+
+        $this->assertSame([], $navigation->invoke($provider));
+
+        Setting::updateSettings(VoucherSettings::USER_MENU_KEY, true);
+
+        $item = $navigation->invoke($provider)['vouchers'];
+
+        $this->assertSame('vouchers.index', $item['route']);
+        $this->assertSame('bi bi-ticket-perforated', $item['icon']);
     }
 
     public function test_named_rate_limiter_uses_current_setting_and_ip_address(): void
