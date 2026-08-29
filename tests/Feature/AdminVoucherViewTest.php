@@ -74,7 +74,10 @@ class AdminVoucherViewTest extends TestCase
         $settings = file_get_contents(dirname(__DIR__, 2).'/resources/views/admin/settings.blade.php');
 
         $this->assertStringContainsString('id="vouchersUserMenuSwitch"', $settings);
+        $this->assertStringContainsString('id="vouchersUserMenuIconInput"', $settings);
+        $this->assertStringContainsString('id="vouchersUserMenuIconPreview"', $settings);
         $this->assertStringContainsString('name="user_menu"', $settings);
+        $this->assertStringContainsString('name="user_menu_icon"', $settings);
         $this->assertStringContainsString('old(\'user_menu\', $showInUserMenu)', $settings);
     }
 

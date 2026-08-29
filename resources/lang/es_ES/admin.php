@@ -18,6 +18,8 @@ return [
         'enabled_help' => 'Al desactivarlo, se detendrán todos los canjes sin modificar ni deshabilitar los códigos individuales.',
         'user_menu' => 'Mostrar Vouchers en el menú del usuario',
         'user_menu_help' => 'Agrega un acceso a la página de canje en el menú desplegable de los usuarios con sesión iniciada.',
+        'user_menu_icon' => 'Icono del menú',
+        'user_menu_icon_help' => 'Escribe una clase de <a href="https://icons.getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap Icons</a>, por ejemplo <code>bi-ticket-perforated</code>.',
         'rate_limit' => 'Límite de intentos de canje',
         'attempts_per_minute' => 'intentos por minuto y dirección IP',
         'rate_limit_help' => 'Limita todos los intentos de una misma dirección IP para reducir la adivinación de códigos y el uso malintencionado.',

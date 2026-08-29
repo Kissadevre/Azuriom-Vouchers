@@ -18,6 +18,8 @@ return [
         'enabled_help' => 'When disabled, every voucher redemption is paused without changing or disabling individual codes.',
         'user_menu' => 'Show Vouchers in the user menu',
         'user_menu_help' => 'Adds a shortcut to the redemption page in the dropdown menu for signed-in users.',
+        'user_menu_icon' => 'Menu icon',
+        'user_menu_icon_help' => 'Enter a <a href="https://icons.getbootstrap.com/" target="_blank" rel="noopener noreferrer">Bootstrap Icons</a> class, for example <code>bi-ticket-perforated</code>.',
         'rate_limit' => 'Redemption rate limit',
         'attempts_per_minute' => 'attempts per minute and IP address',
         'rate_limit_help' => 'Limits all redemption attempts from the same IP address to reduce code guessing and abusive use.',

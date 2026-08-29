@@ -10,6 +10,10 @@ class VoucherSettings
 
     public const USER_MENU_KEY = 'vouchers.user_menu';
 
+    public const USER_MENU_ICON_KEY = 'vouchers.user_menu_icon';
+
+    public const DEFAULT_USER_MENU_ICON = 'bi-ticket-perforated';
+
     public const DEFAULT_RATE_LIMIT = 10;
 
     /**
@@ -34,5 +38,19 @@ class VoucherSettings
     public function showInUserMenu(): bool
     {
         return filter_var(setting(self::USER_MENU_KEY, false), FILTER_VALIDATE_BOOL);
+    }
+
+    /**
+     * Get the validated Bootstrap Icon name used by the user menu shortcut.
+     */
+    public function userMenuIcon(): string
+    {
+        $icon = setting(self::USER_MENU_ICON_KEY, self::DEFAULT_USER_MENU_ICON);
+
+        if (! is_string($icon) || preg_match('/^bi-[a-z0-9]+(?:-[a-z0-9]+)*$/D', $icon) !== 1) {
+            return self::DEFAULT_USER_MENU_ICON;
+        }
+
+        return $icon;
     }
 }

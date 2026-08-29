@@ -125,7 +125,7 @@ class VouchersServiceProvider extends BasePluginServiceProvider
             'vouchers' => [
                 'route' => 'vouchers.index',
                 'name' => trans('vouchers::messages.nav.vouchers'),
-                'icon' => 'bi bi-ticket-perforated',
+                'icon' => 'bi '.$this->app->make(VoucherSettings::class)->userMenuIcon(),
             ],
         ];
     }
