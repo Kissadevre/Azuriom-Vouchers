@@ -5,6 +5,7 @@ namespace Azuriom\Plugin\Vouchers\Providers;
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
 use Azuriom\Models\ActionLog;
 use Azuriom\Models\Permission;
+use Azuriom\Models\Setting;
 use Azuriom\Plugin\Vouchers\Commands\ProcessDeliveriesCommand;
 use Azuriom\Plugin\Vouchers\Models\Reward;
 use Azuriom\Plugin\Vouchers\Models\Voucher;
@@ -16,6 +17,14 @@ use Illuminate\Support\Facades\RateLimiter;
 
 class VouchersServiceProvider extends BasePluginServiceProvider
 {
+    /**
+     * Register sensitive settings before Azuriom hydrates them from storage.
+     */
+    public function register(): void
+    {
+        Setting::markAsEncrypted(VoucherSettings::DISCORD_WEBHOOK_URL_KEY);
+    }
+
     /**
      * Bootstrap the plugin services.
      */

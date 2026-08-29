@@ -19,6 +19,7 @@ Vouchers is an Azuriom plugin for creating redeemable codes and granting one or 
 - Every redemption creates an immutable execution ledger for its rewards.
 - Administrators can pause every redemption globally and configure a per-IP attempts-per-minute limit.
 - Administrators can optionally expose a Vouchers shortcut with a configurable Bootstrap Icon in the authenticated user dropdown; it is disabled by default.
+- Optional Discord webhook notifications can report new claims with the recipient, internal voucher name, and redemption time; the endpoint can be tested from administration.
 - Voucher redemptions automatically use Azuriom's configured reCAPTCHA, hCaptcha or Turnstile protection.
 - The administration panel exposes the complete redemption ledger with recipients, actors, IP addresses and delivery states.
 - Shop is an optional dependency; package rewards are available when Shop is enabled.

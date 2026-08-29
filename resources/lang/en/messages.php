@@ -31,6 +31,15 @@ return [
         'redeem' => 'Redeem code',
     ],
 
+    'webhook' => [
+        'redemption_title' => 'Voucher claimed',
+        'user' => 'User',
+        'voucher' => 'Internal voucher name',
+        'redeemed_at' => 'Redeemed at',
+        'test_title' => 'Vouchers webhook test',
+        'test_description' => 'Discord notifications are configured correctly.',
+    ],
+
     'errors' => [
         'unavailable' => 'This voucher is invalid or is not available.',
         'authentication_required' => 'You must sign in before redeeming this voucher.',

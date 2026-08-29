@@ -12,6 +12,10 @@ class VoucherSettings
 
     public const USER_MENU_ICON_KEY = 'vouchers.user_menu_icon';
 
+    public const DISCORD_WEBHOOK_ENABLED_KEY = 'vouchers.discord_webhook.enabled';
+
+    public const DISCORD_WEBHOOK_URL_KEY = 'vouchers.discord_webhook.url';
+
     public const DEFAULT_USER_MENU_ICON = 'bi-ticket-perforated';
 
     public const DEFAULT_RATE_LIMIT = 10;
@@ -52,5 +56,23 @@ class VoucherSettings
         }
 
         return $icon;
+    }
+
+    /**
+     * Determine whether successful voucher claims should notify Discord.
+     */
+    public function discordWebhookEnabled(): bool
+    {
+        return filter_var(setting(self::DISCORD_WEBHOOK_ENABLED_KEY, false), FILTER_VALIDATE_BOOL);
+    }
+
+    /**
+     * Get the configured Discord webhook URL, when present.
+     */
+    public function discordWebhookUrl(): ?string
+    {
+        $url = setting(self::DISCORD_WEBHOOK_URL_KEY);
+
+        return is_string($url) && trim($url) !== '' ? trim($url) : null;
     }
 }

@@ -19,18 +19,27 @@ class VoucherSettingsTest extends TestCase
         $this->assertSame(10, $settings->rateLimit());
         $this->assertFalse($settings->showInUserMenu());
         $this->assertSame(VoucherSettings::DEFAULT_USER_MENU_ICON, $settings->userMenuIcon());
+        $this->assertFalse($settings->discordWebhookEnabled());
+        $this->assertNull($settings->discordWebhookUrl());
 
         Setting::updateSettings([
             VoucherSettings::ENABLED_KEY => false,
             VoucherSettings::RATE_LIMIT_KEY => 7,
             VoucherSettings::USER_MENU_KEY => true,
             VoucherSettings::USER_MENU_ICON_KEY => 'bi-gift-fill',
+            VoucherSettings::DISCORD_WEBHOOK_ENABLED_KEY => true,
+            VoucherSettings::DISCORD_WEBHOOK_URL_KEY => 'https://discord.com/api/webhooks/123456789/test-token',
         ]);
 
         $this->assertFalse($settings->enabled());
         $this->assertSame(7, $settings->rateLimit());
         $this->assertTrue($settings->showInUserMenu());
         $this->assertSame('bi-gift-fill', $settings->userMenuIcon());
+        $this->assertTrue($settings->discordWebhookEnabled());
+        $this->assertSame(
+            'https://discord.com/api/webhooks/123456789/test-token',
+            $settings->discordWebhookUrl(),
+        );
     }
 
     public function test_user_menu_navigation_is_registered_only_when_enabled(): void

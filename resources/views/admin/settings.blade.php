@@ -70,6 +70,28 @@
                     </div>
                 </div>
 
+                <div class="vouchers-admin-section mb-4">
+                    <div class="form-check form-switch mb-3">
+                        <input type="hidden" name="discord_webhook_enabled" value="0">
+                        <input type="checkbox" class="form-check-input" id="discordWebhookEnabledSwitch" name="discord_webhook_enabled" value="1" @checked(old('discord_webhook_enabled', $discordWebhookEnabled))>
+                        <label class="form-check-label fw-semibold" for="discordWebhookEnabledSwitch">{{ trans('vouchers::admin.settings.discord_webhook_enabled') }}</label>
+                        <div class="form-text">{{ trans('vouchers::admin.settings.discord_webhook_enabled_help') }}</div>
+                    </div>
+
+                    <label class="form-label fw-semibold" for="discordWebhookUrlInput">{{ trans('vouchers::admin.settings.discord_webhook_url') }}</label>
+                    <div class="input-group @error('discord_webhook_url') has-validation @enderror">
+                        <span class="input-group-text" aria-hidden="true"><i class="bi bi-discord"></i></span>
+                        <input type="url" class="form-control @error('discord_webhook_url') is-invalid @enderror" id="discordWebhookUrlInput" name="discord_webhook_url" value="{{ old('discord_webhook_url', $discordWebhookUrl) }}" maxlength="255" placeholder="https://discord.com/api/webhooks/.../..." autocomplete="off">
+                        <button type="submit" class="btn btn-outline-secondary" formaction="{{ route('vouchers.admin.settings.webhook.test') }}" formmethod="POST">
+                            <i class="bi bi-send-check" aria-hidden="true"></i> {{ trans('vouchers::admin.settings.discord_webhook_test') }}
+                        </button>
+                        @error('discord_webhook_url')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                        @enderror
+                    </div>
+                    <div class="form-text">{{ trans('vouchers::admin.settings.discord_webhook_url_help') }}</div>
+                </div>
+
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-check-lg" aria-hidden="true"></i> {{ trans('messages.actions.save') }}
                 </button>
