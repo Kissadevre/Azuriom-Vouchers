@@ -31,6 +31,15 @@ return [
         'redeem' => 'Canjear código',
     ],
 
+    'webhook' => [
+        'redemption_title' => 'Voucher reclamado',
+        'user' => 'Usuario',
+        'voucher' => 'Nombre interno del voucher',
+        'redeemed_at' => 'Fecha y hora del canje',
+        'test_title' => 'Prueba del webhook de Vouchers',
+        'test_description' => 'Las notificaciones de Discord están configuradas correctamente.',
+    ],
+
     'errors' => [
         'unavailable' => 'Este código no es válido o no está disponible.',
         'authentication_required' => 'Debes iniciar sesión antes de canjear este código.',

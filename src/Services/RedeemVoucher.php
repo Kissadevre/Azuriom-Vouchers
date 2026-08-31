@@ -20,6 +20,7 @@ class RedeemVoucher
     public function __construct(
         private readonly RewardDeliveryService $delivery,
         private readonly VoucherSettings $settings,
+        private readonly DiscordWebhookService $discordWebhook,
     ) {
     }
 
@@ -50,6 +51,8 @@ class RedeemVoucher
             return $this->delivery->deliverDeferred($redemption);
         }
 
+        $isNewRedemption = false;
+
         try {
             $redemption = DB::transaction(function () use (
                 $code,
@@ -58,6 +61,7 @@ class RedeemVoucher
                 $requestToken,
                 $requestFingerprints,
                 $ipAddress,
+                &$isNewRedemption,
             ) {
                 $voucher = Voucher::query()
                     ->whereCode($code)
@@ -108,6 +112,7 @@ class RedeemVoucher
                     'status' => Redemption::STATUS_PROCESSING,
                 ]);
                 $voucher->redemptions()->save($redemption);
+                $isNewRedemption = true;
 
                 $internalRoleExecution = null;
 
@@ -151,7 +156,13 @@ class RedeemVoucher
             throw new VoucherRedemptionException(VoucherRedemptionException::RECIPIENT_NOT_FOUND);
         }
 
-        return $this->delivery->deliverDeferred($redemption);
+        $redemption = $this->delivery->deliverDeferred($redemption);
+
+        if ($isNewRedemption) {
+            rescue(fn () => $this->discordWebhook->notifyRedemption($redemption));
+        }
+
+        return $redemption;
     }
 
     /**

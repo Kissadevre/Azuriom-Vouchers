@@ -79,6 +79,9 @@ class AdminVoucherViewTest extends TestCase
         $this->assertStringContainsString('name="user_menu"', $settings);
         $this->assertStringContainsString('name="user_menu_icon"', $settings);
         $this->assertStringContainsString('old(\'user_menu\', $showInUserMenu)', $settings);
+        $this->assertStringContainsString('id="discordWebhookEnabledSwitch"', $settings);
+        $this->assertStringContainsString('id="discordWebhookUrlInput"', $settings);
+        $this->assertStringContainsString("route('vouchers.admin.settings.webhook.test')", $settings);
     }
 
     public function test_an_unavailable_internal_role_snapshot_is_rendered_safely(): void

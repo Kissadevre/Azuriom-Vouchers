@@ -23,6 +23,7 @@ use Azuriom\Plugin\Vouchers\Tests\Fakes\RecordingServerBridge;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class RedeemVoucherTest extends TestCase
@@ -58,6 +59,11 @@ class RedeemVoucherTest extends TestCase
 
     public function test_multiple_point_rewards_are_delivered_and_request_idempotent(): void
     {
+        Http::fake(['discord.com/*' => Http::response(status: 204)]);
+        Setting::updateSettings([
+            'vouchers.discord_webhook.enabled' => true,
+            'vouchers.discord_webhook.url' => 'https://discord.com/api/webhooks/123456789/test-token',
+        ]);
         $user = $this->createUser();
         $voucher = $this->createVoucher(maxPerUser: 2);
         $voucher->rewards()->createMany([
@@ -80,6 +86,10 @@ class RedeemVoucherTest extends TestCase
         $this->assertTrue($first->executions->every(
             fn (RewardExecution $execution) => $execution->status === RewardExecution::STATUS_SUCCEEDED
         ));
+        Http::assertSentCount(1);
+        Http::assertSent(fn ($request) => $request->url() === 'https://discord.com/api/webhooks/123456789/test-token'
+            && data_get($request->data(), 'embeds.0.fields.0.value') === $user->name
+            && data_get($request->data(), 'embeds.0.fields.1.value') === $voucher->name);
     }
 
     public function test_an_invalid_second_reward_rolls_back_the_entire_redemption(): void
@@ -108,6 +118,35 @@ class RedeemVoucherTest extends TestCase
         $this->assertSame(0, $voucher->fresh()->redemptions_count);
         $this->assertSame(0, Redemption::query()->count());
         $this->assertSame(0, RewardExecution::query()->count());
+    }
+
+    public function test_discord_failure_never_rolls_back_a_successful_redemption(): void
+    {
+        Http::fake(['discord.com/*' => Http::response(['message' => 'Unknown Webhook'], 404)]);
+        Setting::updateSettings([
+            'vouchers.discord_webhook.enabled' => true,
+            'vouchers.discord_webhook.url' => 'https://discord.com/api/webhooks/123456789/expired-token',
+        ]);
+        $user = $this->createUser();
+        $voucher = $this->createVoucher(maxPerUser: 1);
+        $voucher->rewards()->create([
+            'type' => Reward::TYPE_MONEY,
+            'configuration' => ['amount' => 10],
+            'position' => 0,
+        ]);
+
+        $redemption = app(RedeemVoucher::class)->redeem(
+            'welcome-2026',
+            $user,
+            null,
+            (string) Str::uuid(),
+            '127.0.0.1',
+        );
+
+        $this->assertSame(Redemption::STATUS_COMPLETED, $redemption->status);
+        $this->assertSame(10.0, $user->fresh()->money);
+        $this->assertSame(1, $voucher->fresh()->redemptions_count);
+        Http::assertSentCount(1);
     }
 
     public function test_a_large_two_decimal_point_reward_is_accepted(): void
