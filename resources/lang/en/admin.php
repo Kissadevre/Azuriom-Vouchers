@@ -2,6 +2,7 @@
 
 return [
     'title' => 'Vouchers',
+    'debug' => ['enabled' => 'Enable debug logging', 'help' => 'Logs requests, execution time, failures, and technical context for 14 days. Voucher codes, credentials, and webhooks are redacted.'],
     'permission' => 'Manage vouchers',
 
     'nav' => [

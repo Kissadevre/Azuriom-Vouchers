@@ -22,6 +22,16 @@
 
                 <div class="vouchers-admin-section mb-4">
                     <div class="form-check form-switch">
+                        <input type="hidden" name="debug_enabled" value="0">
+                        <input type="checkbox" class="form-check-input" id="vouchersDebugEnabled" name="debug_enabled" value="1" @checked(old('debug_enabled', $debugEnabled))>
+                        <label class="form-check-label fw-semibold" for="vouchersDebugEnabled"><i class="bi bi-bug text-warning me-1" aria-hidden="true"></i>{{ trans('vouchers::admin.debug.enabled') }}</label>
+                        <div class="form-text">{{ trans('vouchers::admin.debug.help') }}</div>
+                        <div class="form-text"><code>storage/logs/vouchers-debug-YYYY-MM-DD.log</code></div>
+                    </div>
+                </div>
+
+                <div class="vouchers-admin-section mb-4">
+                    <div class="form-check form-switch">
                         <input type="hidden" name="enabled" value="0">
                         <input type="checkbox" class="form-check-input" id="vouchersEnabledSwitch" name="enabled" value="1" @checked(old('enabled', $vouchersEnabled))>
                         <label class="form-check-label fw-semibold" for="vouchersEnabledSwitch">{{ trans('vouchers::admin.settings.enabled') }}</label>

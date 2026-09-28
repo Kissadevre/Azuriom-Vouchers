@@ -2,6 +2,7 @@
 
 return [
     'title' => 'Códigos de canje',
+    'debug' => ['enabled' => 'Activar registros de depuración', 'help' => 'Registra solicitudes, tiempos de ejecución, errores y contexto técnico durante 14 días. Los códigos, credenciales y webhooks se ocultan.'],
     'permission' => 'Administrar códigos de canje',
 
     'nav' => [

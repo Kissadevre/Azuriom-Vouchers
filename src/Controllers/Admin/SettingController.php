@@ -20,6 +20,7 @@ class SettingController extends Controller
     {
         return view('vouchers::admin.settings', [
             'vouchersEnabled' => $settings->enabled(),
+            'debugEnabled' => $settings->debugEnabled(),
             'rateLimit' => $settings->rateLimit(),
             'showInUserMenu' => $settings->showInUserMenu(),
             'userMenuIcon' => $settings->userMenuIcon(),
@@ -35,6 +36,7 @@ class SettingController extends Controller
     {
         $validated = $request->validate([
             'enabled' => ['required', 'boolean'],
+            'debug_enabled' => ['required', 'boolean'],
             'user_menu' => ['required', 'boolean'],
             'user_menu_icon' => ['required', 'string', 'max:64', 'regex:/^bi-[a-z0-9]+(?:-[a-z0-9]+)*$/D'],
             'rate_limit' => ['required', 'regex:/^[0-9]+$/D', 'integer', 'min:1', 'max:1000'],
@@ -54,6 +56,7 @@ class SettingController extends Controller
 
         Setting::updateSettings([
             VoucherSettings::ENABLED_KEY => (bool) $validated['enabled'],
+            VoucherSettings::DEBUG_ENABLED_KEY => (bool) $validated['debug_enabled'],
             VoucherSettings::USER_MENU_KEY => (bool) $validated['user_menu'],
             VoucherSettings::USER_MENU_ICON_KEY => $validated['user_menu_icon'],
             VoucherSettings::RATE_LIMIT_KEY => (int) $validated['rate_limit'],

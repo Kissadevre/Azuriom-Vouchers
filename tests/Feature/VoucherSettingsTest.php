@@ -16,6 +16,7 @@ class VoucherSettingsTest extends TestCase
         $settings = app(VoucherSettings::class);
 
         $this->assertTrue($settings->enabled());
+        $this->assertFalse($settings->debugEnabled());
         $this->assertSame(10, $settings->rateLimit());
         $this->assertFalse($settings->showInUserMenu());
         $this->assertSame(VoucherSettings::DEFAULT_USER_MENU_ICON, $settings->userMenuIcon());
@@ -24,6 +25,7 @@ class VoucherSettingsTest extends TestCase
 
         Setting::updateSettings([
             VoucherSettings::ENABLED_KEY => false,
+            VoucherSettings::DEBUG_ENABLED_KEY => true,
             VoucherSettings::RATE_LIMIT_KEY => 7,
             VoucherSettings::USER_MENU_KEY => true,
             VoucherSettings::USER_MENU_ICON_KEY => 'bi-gift-fill',
@@ -32,6 +34,7 @@ class VoucherSettingsTest extends TestCase
         ]);
 
         $this->assertFalse($settings->enabled());
+        $this->assertTrue($settings->debugEnabled());
         $this->assertSame(7, $settings->rateLimit());
         $this->assertTrue($settings->showInUserMenu());
         $this->assertSame('bi-gift-fill', $settings->userMenuIcon());

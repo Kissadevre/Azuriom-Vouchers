@@ -6,6 +6,8 @@ class VoucherSettings
 {
     public const ENABLED_KEY = 'vouchers.enabled';
 
+    public const DEBUG_ENABLED_KEY = 'vouchers.debug_enabled';
+
     public const RATE_LIMIT_KEY = 'vouchers.rate_limit';
 
     public const USER_MENU_KEY = 'vouchers.user_menu';
@@ -26,6 +28,11 @@ class VoucherSettings
     public function enabled(): bool
     {
         return filter_var(setting(self::ENABLED_KEY, true), FILTER_VALIDATE_BOOL);
+    }
+
+    public function debugEnabled(): bool
+    {
+        return filter_var(setting(self::DEBUG_ENABLED_KEY, false), FILTER_VALIDATE_BOOL);
     }
 
     /**
